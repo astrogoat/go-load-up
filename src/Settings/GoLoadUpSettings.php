@@ -2,9 +2,9 @@
 
 namespace Astrogoat\GoLoadUp\Settings;
 
+use Astrogoat\GoLoadUp\Actions\GoLoadUpAction;
 use Helix\Lego\Settings\AppSettings;
 use Illuminate\Validation\Rule;
-use Astrogoat\GoLoadUp\Actions\GoLoadUpAction;
 
 class GoLoadUpSettings extends AppSettings
 {

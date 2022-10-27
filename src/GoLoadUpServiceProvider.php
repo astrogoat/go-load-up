@@ -2,11 +2,11 @@
 
 namespace Astrogoat\GoLoadUp;
 
+use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
 use Helix\Lego\Apps\App;
 use Helix\Lego\LegoManager;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
 
 class GoLoadUpServiceProvider extends PackageServiceProvider
 {
