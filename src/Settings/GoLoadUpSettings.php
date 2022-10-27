@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Settings;
+namespace Astrogoat\GoLoadUp\Settings;
 
 use Helix\Lego\Settings\AppSettings;
 use Illuminate\Validation\Rule;
-use VendorName\Skeleton\Actions\SkeletonAction;
+use Astrogoat\GoLoadUp\Actions\GoLoadUpAction;
 
-class SkeletonSettings extends AppSettings
+class GoLoadUpSettings extends AppSettings
 {
     // public string $url;
 
@@ -18,7 +18,7 @@ class SkeletonSettings extends AppSettings
     }
 
     // protected static array $actions = [
-    //     SkeletonAction::class,
+    //     GoLoadUpAction::class,
     // ];
 
     // public static function encrypted(): array
@@ -28,11 +28,11 @@ class SkeletonSettings extends AppSettings
 
     public function description(): string
     {
-        return 'Interact with Skeleton.';
+        return 'Interact with GoLoadUp.';
     }
 
     public static function group(): string
     {
-        return 'skeleton';
+        return 'go-load-up';
     }
 }
