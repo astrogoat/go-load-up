@@ -2,10 +2,10 @@
 
 namespace Astrogoat\GoLoadUp;
 
-use Astrogoat\Blog\Http\Livewire\Models\ArticleForm;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodeForm;
 use Astrogoat\GoLoadUp\Http\Livewire\Upload\CsvUploadForm;
 use Astrogoat\GoLoadUp\Models\ZipCode;
+use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
 use Helix\Fabrick\Icon;
 use Helix\Lego\Apps\App;
 use Helix\Lego\LegoManager;
@@ -14,7 +14,6 @@ use Helix\Lego\Menus\Menu;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
 
 class GoLoadUpServiceProvider extends PackageServiceProvider
 {
@@ -28,7 +27,7 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
                 __DIR__ . '/../database/migrations/settings',
             ])
             ->models([
-                ZipCode::class
+                ZipCode::class,
             ])
             ->menu(function (Menu $menu) {
                 $menu->addToSection(
@@ -64,6 +63,5 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
 
         Livewire::component('astrogoat.go-load-up.zip-codes.form', ZipCodeForm::class);
         Livewire::component('astrogoat.go-load-up.upload.form', CsvUploadForm::class);
-
     }
 }

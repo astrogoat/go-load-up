@@ -1,6 +1,7 @@
 <?php
 
 namespace Astrogoat\GoLoadUp\Http\Controllers;
+
 use Astrogoat\GoLoadUp\Models\ZipCode;
 
 class GoLoadUpController
@@ -17,5 +18,4 @@ class GoLoadUpController
     {
         return view('go-load-up::models.zip-codes.edit', compact('zipCode'));
     }
-
 }

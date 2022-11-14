@@ -7,7 +7,6 @@ use Helix\Lego\Models\Model as LegoModel;
 
 class ZipCode extends LegoModel
 {
-
     protected $table = 'zip_codes';
 
     public static function icon(): string
@@ -19,5 +18,4 @@ class ZipCode extends LegoModel
     {
         return 'name';
     }
-
 }
