@@ -23,9 +23,10 @@
     ],
     "require": {
         "php": "^8.0",
-        "astrogoat/strata": "^0.1.9",
+        "astrogoat/strata": "^0.2.15",
+        "illuminate/contracts": "^8.37 || ^9.9",
         "spatie/laravel-package-tools": "^1.4.3",
-        "illuminate/contracts": "^8.37 || ^9.9"
+        "spatie/simple-excel": "^2.3"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.3",
