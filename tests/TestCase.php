@@ -2,9 +2,9 @@
 
 namespace Astrogoat\GoLoadUp\Tests;
 
+use Astrogoat\GoLoadUp\GoLoadUpServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Astrogoat\GoLoadUp\GoLoadUpServiceProvider;
 
 class TestCase extends Orchestra
 {
