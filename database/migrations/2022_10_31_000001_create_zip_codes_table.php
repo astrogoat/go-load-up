@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('zip');
             $table->string('name');
-            $table->string('elp')->nullable();
+            $table->boolean('is_california')->default(0);
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

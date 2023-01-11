@@ -12,6 +12,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use mysql_xdevapi\Exception;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Tonning\Flash\Flash;
 
 class CsvUploadForm extends Component
 {
@@ -46,10 +47,7 @@ class CsvUploadForm extends Component
             $zipcode_chunks = SimpleExcelReader::create($this->file->getRealPath(), 'csv')
                     ->getRows()->chunk(300)->all();
 
-            Notification::info(
-                title: 'Importing...',
-                message: 'You can safely navigate away from this page. You will be notified when the import has finished.'
-            );
+            Flash::success('Zip Codes are Importing...');
 
             foreach($zipcode_chunks as $index => $chunkData)
             {
@@ -58,7 +56,7 @@ class CsvUploadForm extends Component
 
         } catch (Exception $exception)
         {
-            auth()->user->notify(new BellNotification(
+            auth()->user()->notify(new BellNotification(
                 title: 'Zip codes import failed!',
                 message: 'Failed to import zip codes from csv. Error: ' . $exception->getMessage(),
             ));

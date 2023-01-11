@@ -10,6 +10,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Notification;
+use Tonning\Flash\Flash;
 
 class ProcessUploadZipCodes implements shouldQueue
 {
@@ -38,12 +40,14 @@ class ProcessUploadZipCodes implements shouldQueue
             $zipcode = new ZipCode();
             $zipcode->zip = $zipcodeData['zip'];
             $zipcode->name = $zipcodeData['name'];
-            $zipcode->elp = $zipcodeData['ELP'];
-            $zipcode->status = $zipcodeData['status'] == 'enabled';
+            $zipcode->is_california = $zipcodeData['California Boolean'] == 'TRUE';
+            $zipcode->status = true;
             $zipcode->save();
         }
 
         if($this->isLastBatch) {
+            Flash::success('Zip Codes Imported!');
+
             $this->user->notify(new BellNotification(
                 title: 'Zip codes imported!',
                 message: 'Finished importing all zip codes from csv.',

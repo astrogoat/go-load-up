@@ -28,15 +28,15 @@
             />
 
             <x-fab::forms.checkbox
-                label="ELP"
-                wire:model="model.elp"
-                help="If checked this will allow search engines (i.e. Google or Bing) to index the page so it can be found when searching on said search engine."
+                label="Is California zip code"
+                wire:model="model.is_california"
+                help="If checked this indicates that this zip code is A California zip code."
             />
 
             <x-fab::forms.checkbox
                 label="Should be enabled"
                 wire:model="model.status"
-                help="If checked this will allow search engines (i.e. Google or Bing) to index the page so it can be found when searching on said search engine."
+                help="If checked, the zip code is eligible for White Glove Services. To make the zip code ineligible for White Glove, uncheck this box. The box is checked by default with the CSV file is added to Strata."
             />
         </x-fab::layouts.panel>
 

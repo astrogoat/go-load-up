@@ -15,7 +15,7 @@ class ZipCodeForm extends Form
         return [
             'model.zip' => 'required',
             'model.name' => 'required',
-            'model.elp' => 'nullable',
+            'model.is_california' => 'required',
             'model.status' => 'required',
         ];
     }
