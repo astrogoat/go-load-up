@@ -3,11 +3,9 @@
 namespace Astrogoat\GoLoadUp\Http\Livewire\Upload;
 
 use Astrogoat\GoLoadUp\Jobs\ProcessUploadZipCodes;
-use Astrogoat\Shopify\Events\ProductImported;
 use Helix\Fabrick\Notification;
 use Helix\Lego\Notifications\BellNotification;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use mysql_xdevapi\Exception;
@@ -43,24 +41,19 @@ class CsvUploadForm extends Component
 //            message: 'You can safely navigate away from this page. You will be notified when the import has finished.'
 //        );
         try {
-
             $zipcode_chunks = SimpleExcelReader::create($this->file->getRealPath(), 'csv')
                     ->getRows()->chunk(300)->all();
 
             Flash::success('Zip Codes are Importing...');
 
-            foreach($zipcode_chunks as $index => $chunkData)
-            {
+            foreach ($zipcode_chunks as $index => $chunkData) {
                 ProcessUploadZipCodes::dispatch(zipcodes: $chunkData, isLastBatch: count($zipcode_chunks) == $index + 1);
             }
-
-        } catch (Exception $exception)
-        {
+        } catch (Exception $exception) {
             auth()->user()->notify(new BellNotification(
                 title: 'Zip codes import failed!',
                 message: 'Failed to import zip codes from csv. Error: ' . $exception->getMessage(),
             ));
         }
     }
-
 }

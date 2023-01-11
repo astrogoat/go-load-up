@@ -10,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Notification;
 use Tonning\Flash\Flash;
 
 class ProcessUploadZipCodes implements shouldQueue
@@ -35,8 +34,7 @@ class ProcessUploadZipCodes implements shouldQueue
 
     public function handle()
     {
-        foreach ($this->zipcodes as $zipcodeData)
-        {
+        foreach ($this->zipcodes as $zipcodeData) {
             $zipcode = new ZipCode();
             $zipcode->zip = $zipcodeData['zip'];
             $zipcode->name = $zipcodeData['name'];
@@ -45,7 +43,7 @@ class ProcessUploadZipCodes implements shouldQueue
             $zipcode->save();
         }
 
-        if($this->isLastBatch) {
+        if ($this->isLastBatch) {
             Flash::success('Zip Codes Imported!');
 
             $this->user->notify(new BellNotification(
