@@ -36,14 +36,19 @@ class CsvUploadForm extends Component
     public function uploadData()
     {
         try {
-            $zipcode_chunks = SimpleExcelReader::create($this->file->getRealPath(), 'csv')
+            if (!is_null($this->file)) {
+                $zipcode_chunks = SimpleExcelReader::create($this->file->getRealPath(), 'csv')
                     ->getRows()->chunk(300)->all();
 
-            Flash::success('Zip Codes are Importing...');
+                Flash::success('Zip Codes are Importing...');
 
-            foreach ($zipcode_chunks as $index => $chunkData) {
-                ProcessUploadZipCodes::dispatch(zipcodes: $chunkData, isLastBatch: count($zipcode_chunks) == $index + 1);
+                foreach ($zipcode_chunks as $index => $chunkData) {
+                    ProcessUploadZipCodes::dispatch(zipcodes: $chunkData, isLastBatch: count($zipcode_chunks) == $index + 1);
+                }
+            } else {
+                return back()->with('error', 'No file selected');
             }
+
         } catch (Exception $exception) {
             auth()->user()->notify(new BellNotification(
                 title: 'Zip codes import failed!',
