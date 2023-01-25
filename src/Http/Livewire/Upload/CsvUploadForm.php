@@ -36,10 +36,6 @@ class CsvUploadForm extends Component
 
     public function uploadData()
     {
-//        Notification::info(
-//            title: 'Importing...',
-//            message: 'You can safely navigate away from this page. You will be notified when the import has finished.'
-//        );
         try {
             $zipcode_chunks = SimpleExcelReader::create($this->file->getRealPath(), 'csv')
                     ->getRows()->chunk(300)->all();
