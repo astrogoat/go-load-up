@@ -3,7 +3,6 @@
 namespace Astrogoat\GoLoadUp\Http\Livewire\Upload;
 
 use Astrogoat\GoLoadUp\Jobs\ProcessUploadZipCodes;
-use Helix\Fabrick\Notification;
 use Helix\Lego\Notifications\BellNotification;
 use Illuminate\Support\Facades\File;
 use Livewire\Component;
