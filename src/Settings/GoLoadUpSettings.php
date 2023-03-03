@@ -8,23 +8,14 @@ use Illuminate\Validation\Rule;
 
 class GoLoadUpSettings extends AppSettings
 {
-    // public string $url;
+     public string $white_glove_shopify_product_ID;
 
     public function rules(): array
     {
         return [
-            // 'url' => Rule::requiredIf($this->enabled === true),
+             'white_glove_shopify_product_ID' => Rule::requiredIf($this->enabled === true),
         ];
     }
-
-    // protected static array $actions = [
-    //     GoLoadUpAction::class,
-    // ];
-
-    // public static function encrypted(): array
-    // {
-    //     return ['access_token'];
-    // }
 
     public function description(): string
     {

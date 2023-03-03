@@ -2,7 +2,7 @@
     title="{{ $model->name ?: 'Untitled' }}"
     :breadcrumbs="[
             ['title' => 'Home', 'url' => route('lego.dashboard')],
-            ['title' => 'Zip Codes', 'url' => route('lego.go-load-up.index')],
+            ['title' => 'Zip Codes', 'url' => route('lego.go-load-up.zip-codes.index')],
             ['title' => $model->name ?: 'New Zip Code' ],
         ]"
     x-data=""

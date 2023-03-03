@@ -25,16 +25,16 @@
                 @foreach($zipCodes as $zipCode)
                     <x-fab::lists.table.row :odd="$loop->odd">
                         <x-fab::lists.table.column full primary>
-                            <a href="{{ route('lego.blog.articles.edit', $zipCode) }}">{{ $zipCode->zip }}</a>
+                            <a href="{{ route('lego.go-load-up.zip-codes.edit', $zipCode) }}">{{ $zipCode->zip }}</a>
                         </x-fab::lists.table.column>
                         <x-fab::lists.table.column >
-                            <a href="{{ route('lego.blog.articles.edit', $zipCode) }}">{{ $zipCode->name }}</a>
+                            <a href="{{ route('lego.go-load-up.zip-codes.edit', $zipCode) }}">{{ $zipCode->name }}</a>
                         </x-fab::lists.table.column>
 {{--                        <x-fab::lists.table.column full primary>--}}
 {{--                            <a href="{{ route('lego.blog.articles.edit', $zipCode) }}">{{ $zipCode->elp }}</a>--}}
 {{--                        </x-fab::lists.table.column>--}}
                         <x-fab::lists.table.column >
-                            <a href="{{ route('lego.blog.articles.edit', $zipCode) }}">{{ $zipCode->status == 1 ? 'Enabled' : 'Disabled' }}</a>
+                            {{ $zipCode->status == 1 ? 'Enabled' : 'Disabled' }}
                         </x-fab::lists.table.column>
                         <x-fab::lists.table.column
                             align="right">{{ $zipCode->updated_at->toFormattedDateString() }}</x-fab::lists.table.column>

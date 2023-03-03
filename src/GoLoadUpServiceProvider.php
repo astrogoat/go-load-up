@@ -2,6 +2,7 @@
 
 namespace Astrogoat\GoLoadUp;
 
+use Astrogoat\GoLoadUp\Http\Livewire\Models\GoLoadUpProductVariantForm;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodeForm;
 use Astrogoat\GoLoadUp\Http\Livewire\Upload\CsvUploadForm;
 use Astrogoat\GoLoadUp\Models\ZipCode;
@@ -9,6 +10,7 @@ use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
 use Helix\Fabrick\Icon;
 use Helix\Lego\Apps\App;
 use Helix\Lego\LegoManager;
+use Helix\Lego\Menus\Lego\Group;
 use Helix\Lego\Menus\Lego\Link;
 use Helix\Lego\Menus\Menu;
 use Livewire\Livewire;
@@ -32,9 +34,14 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
             ->menu(function (Menu $menu) {
                 $menu->addToSection(
                     Menu::MAIN_SECTIONS['PRIMARY'],
-                    Link::to(route('lego.go-load-up.index'), 'GoLoadUp')
-                        ->after('Pages')
-                        ->icon(Icon::BOOK_OPEN)
+                    Group::add(
+                        'GoLoadUp',
+                        [
+                            Link::to(route('lego.go-load-up.product-match.index'), 'Product Match'),
+                            Link::to(route('lego.go-load-up.zip-codes.index'), 'Zip Codes'),
+                        ],
+                        Icon::BOOK_OPEN,
+                    )->after('Pages'),
                 );
             })
             ->backendRoutes(__DIR__.'/../routes/backend.php')
@@ -62,6 +69,7 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
         }
 
         Livewire::component('astrogoat.go-load-up.zip-codes.form', ZipCodeForm::class);
+        Livewire::component('astrogoat.go-load-up.product.form', GoLoadUpProductVariantForm::class);
         Livewire::component('astrogoat.go-load-up.upload.form', CsvUploadForm::class);
     }
 }
