@@ -2,13 +2,12 @@
 
 namespace Astrogoat\GoLoadUp\Settings;
 
-use Astrogoat\GoLoadUp\Actions\GoLoadUpAction;
 use Helix\Lego\Settings\AppSettings;
 use Illuminate\Validation\Rule;
 
 class GoLoadUpSettings extends AppSettings
 {
-     public string $white_glove_shopify_product_ID;
+    public string $white_glove_shopify_product_ID;
 
     public function rules(): array
     {
