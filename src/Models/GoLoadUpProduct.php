@@ -28,7 +28,7 @@ class GoLoadUpProduct extends LegoModel
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'go_load_up_shopify_product', )
+        return $this->belongsToMany(Product::class, 'go_load_up_shopify_product')
             ->withPivot('id')
             ->withPivot('product_option')
             ->withPivot('order')
