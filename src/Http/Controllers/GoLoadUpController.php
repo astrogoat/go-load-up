@@ -4,8 +4,6 @@ namespace Astrogoat\GoLoadUp\Http\Controllers;
 
 use Astrogoat\GoLoadUp\Models\GoLoadUpProduct;
 use Astrogoat\GoLoadUp\Models\ZipCode;
-use Astrogoat\Shopify\Models\Product;
-use Astrogoat\Shopify\Models\ProductVariant;
 
 class GoLoadUpController
 {

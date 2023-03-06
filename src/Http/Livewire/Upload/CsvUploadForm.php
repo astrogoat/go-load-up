@@ -36,7 +36,7 @@ class CsvUploadForm extends Component
     public function uploadData()
     {
         try {
-            if (!is_null($this->file)) {
+            if (! is_null($this->file)) {
                 $zipcode_chunks = SimpleExcelReader::create($this->file->getRealPath(), 'csv')
                     ->getRows()->chunk(300)->all();
 
@@ -48,7 +48,6 @@ class CsvUploadForm extends Component
             } else {
                 return back()->with('error', 'No file selected');
             }
-
         } catch (Exception $exception) {
             auth()->user()->notify(new BellNotification(
                 title: 'Zip codes import failed!',
