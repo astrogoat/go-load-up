@@ -6,7 +6,7 @@
     title="Zipcode Upload"
     :breadcrumbs="[
             ['title' => 'Home', 'url' => route('lego.dashboard')],
-            ['title' => 'Zip Codes', 'url' => route('lego.go-load-up.index')],
+            ['title' => 'Zip Codes', 'url' => route('lego.go-load-up.zip-codes.index')],
             ['title' => 'Zip code upload' ],
 
         ]"
