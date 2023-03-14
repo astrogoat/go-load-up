@@ -53,7 +53,9 @@ class GoLoadUpProductVariantForm extends Form
             return $item->id != $this->model->parent_product_variant_id;
         });
         if ($variant->isNotEmpty()) {
-            $this->model->error_message = 'You have "' . $variant->first()->title . '" in your cart...';
+            if (is_null($this->model->error_message)) {
+                $this->model->error_message = 'Oh no! You have added "' . $variant->first()->title . '" to your cart, but';
+            }
         }
     }
 
