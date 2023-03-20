@@ -38,20 +38,24 @@ class GoLoadUpProductVariantForm extends Form
         $this->selectedOptionsOne = $this->model->products->reject(function ($product) {
             return $product->pivot->product_option != 1;
         });
+
         $this->selectedOptionsOneIds = $this->selectedOptionsOne->map(fn ($product) => $product->id)->toArray();
 
         $this->selectedOptionsTwo = $this->model->products->reject(function ($product) {
             return $product->pivot->product_option != 2;
         });
+
         $this->selectedOptionsTwoIds = $this->selectedOptionsTwo->map(fn ($product) => $product->id)->toArray();
     }
 
     public function setErrorLabel()
     {
         $variants = $this->getVariantsOfDefaultProduct();
+
         $variant = $variants->reject(function ($item) {
             return $item->id != $this->model->parent_product_variant_id;
         });
+
         if ($variant->isNotEmpty()) {
             if (is_null($this->model->error_message)) {
                 $this->model->error_message = 'Oh no! You have added "' . $variant->first()->title . '" to your cart, but';
@@ -107,6 +111,7 @@ class GoLoadUpProductVariantForm extends Form
                 ->reject(function ($item) use ($productOption, $product) {
                     return $product->pivot->product_id != $item->id;
                 });
+
             if ($matchFromSelectedOptions->isEmpty()) {
                 $record = GoLoadUpProductRelation::find($product->pivot->id);
                 $record->delete();
