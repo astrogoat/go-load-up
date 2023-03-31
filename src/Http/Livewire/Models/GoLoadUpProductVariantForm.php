@@ -17,6 +17,8 @@ class GoLoadUpProductVariantForm extends Form
     public SupportCollection $selectedOptionsTwo;
     public array $selectedOptionsTwoIds = [];
 
+    protected bool $canBeViewed = false;
+
     protected $listeners = [
         'updateProductsOrder',
     ];
