@@ -204,4 +204,9 @@ class GoLoadUpProductVariantForm extends Form
     {
         return GoLoadUpProduct::class;
     }
+
+    public function deleting()
+    {
+        GoLoadUpProductRelation::where('go_load_up_product_id', $this->model->id)->delete();
+    }
 }
