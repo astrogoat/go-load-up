@@ -2,10 +2,9 @@
 
 namespace Astrogoat\GoLoadUp\Settings;
 
+use Astrogoat\Shopify\Models\Product;
 use Helix\Lego\Settings\AppSettings;
 use Illuminate\Validation\Rule;
-use Astrogoat\Shopify\Models\Product;
-
 
 class GoLoadUpSettings extends AppSettings
 {
