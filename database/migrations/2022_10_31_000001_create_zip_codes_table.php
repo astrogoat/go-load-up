@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('zip_codes', function (Blueprint $table) {
+        Schema::create('go_load_up_serviceable_zip_codes', function (Blueprint $table) {
             $table->id();
             $table->string('zip');
             $table->string('name');
@@ -20,6 +20,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('zip_codes');
+        Schema::dropIfExists('go_load_up_serviceable_zip_codes');
     }
 };
