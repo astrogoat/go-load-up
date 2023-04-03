@@ -7,7 +7,7 @@ use Helix\Lego\Models\Model as LegoModel;
 
 class ZipCode extends LegoModel
 {
-    protected $table = 'zip_codes';
+    protected $table = 'go_load_up_serviceable_zip_codes';
 
     public static function icon(): string
     {
