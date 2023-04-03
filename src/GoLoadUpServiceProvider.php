@@ -45,7 +45,8 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
                 );
             })
             ->backendRoutes(__DIR__.'/../routes/backend.php')
-            ->frontendRoutes(__DIR__.'/../routes/frontend.php');
+            ->frontendRoutes(__DIR__.'/../routes/frontend.php')
+            ->apiRoutes(__DIR__.'/../routes/api.php');
     }
 
     public function registeringPackage()
