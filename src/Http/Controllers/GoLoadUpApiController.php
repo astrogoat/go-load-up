@@ -46,7 +46,7 @@ class GoLoadUpApiController
 
     public function getRemovalOnlyMattress($isCA = false)
     {
-        $key = $isCA ? "CA_removal_only_mattress_shopify_ID" : "removal_only_mattress_shopify_ID";
+        $key = $isCA ? "california_removal_only_mattress_shopify_id" : "removal_only_mattress_shopify_id";
 
         return ProductVariant::where('shopify_id', settings(GoLoadUpSettings::class, $key))?->first();
     }
