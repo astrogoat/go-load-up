@@ -40,7 +40,7 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
                             Link::to(route('lego.go-load-up.product-match.index'), 'Product Match'),
                             Link::to(route('lego.go-load-up.zip-codes.index'), 'Zip Codes'),
                         ],
-                        Icon::BOOK_OPEN,
+                        Icon::TRUCK,
                     )->after('Pages'),
                 );
             })
