@@ -6,7 +6,7 @@ use Astrogoat\GoLoadUp\Models\ZipCode;
 
 class GoLoadUp
 {
-    public static function verifyZipCode($zipCode): ZipCode|null
+    public static function getZipCodeModel($zipCode): ZipCode|null
     {
         return ZipCode::all()->where('zip', $zipCode)->first();
     }

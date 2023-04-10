@@ -36,4 +36,9 @@ class GoLoadUpController
     {
         return view('go-load-up::models.product-variants.edit', compact('goLoadUpProduct'));
     }
+
+    public function checkBoxCombos()
+    {
+        return view('go-load-up::models.checkbox-combos.index',);
+    }
 }

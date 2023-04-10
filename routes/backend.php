@@ -25,5 +25,12 @@ Route::group([
         Route::get('/{goLoadUpProduct}/edit', [GoLoadUpController::class, 'editGoLoadUpProduct'])->name('edit');
     });
 
+    Route::group([
+        'as' => 'checkbox-combos.',
+        'prefix' => 'checkbox-combos/'
+    ], function () {
+        Route::get('/', [GoLoadUpController::class, 'checkBoxCombos'])->name('index');
+    });
+
 });
 

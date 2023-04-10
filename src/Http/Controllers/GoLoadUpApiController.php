@@ -16,7 +16,7 @@ class GoLoadUpApiController
         $wgLineItems = $request->wg_line_items;
         $zipCode = $request->zip;
 
-        $validZipCode = GoLoadUp::verifyZipCode($zipCode);
+        $validZipCode = GoLoadUp::getZipCodeModel($zipCode);
 
         if(is_null($validZipCode)) return response()->json([
                 'status' => 404,

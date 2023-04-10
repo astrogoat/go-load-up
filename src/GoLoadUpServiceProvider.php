@@ -4,6 +4,7 @@ namespace Astrogoat\GoLoadUp;
 
 use Astrogoat\GoLoadUp\Http\Livewire\Models\GoLoadUpProductVariantForm;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodeForm;
+use Astrogoat\GoLoadUp\Http\Livewire\CheckboxCombos\CheckboxCombos;
 use Astrogoat\GoLoadUp\Http\Livewire\Upload\CsvUploadForm;
 use Astrogoat\GoLoadUp\Models\ZipCode;
 use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
@@ -39,6 +40,7 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
                         [
                             Link::to(route('lego.go-load-up.product-match.index'), 'Product Match'),
                             Link::to(route('lego.go-load-up.zip-codes.index'), 'Zip Codes'),
+                            Link::to(route('lego.go-load-up.checkbox-combos.index'), 'Checkbox Combos'),
                         ],
                         Icon::BOOK_OPEN,
                     )->after('Pages'),
@@ -72,5 +74,6 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
         Livewire::component('astrogoat.go-load-up.zip-codes.form', ZipCodeForm::class);
         Livewire::component('astrogoat.go-load-up.product.form', GoLoadUpProductVariantForm::class);
         Livewire::component('astrogoat.go-load-up.upload.form', CsvUploadForm::class);
+        Livewire::component('astrogoat.go-load-up.checkbox-combos.form', CheckboxCombos::class);
     }
 }
