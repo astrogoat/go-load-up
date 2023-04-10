@@ -3,10 +3,10 @@
 namespace Astrogoat\GoLoadUp\Http\Livewire\CheckboxCombos;
 
 use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
-use Illuminate\Support\Collection as SupportCollection;
-use Livewire\Component;
 use Astrogoat\Shopify\Models\Product;
 use Astrogoat\Shopify\Models\ProductVariant;
+use Illuminate\Support\Collection as SupportCollection;
+use Livewire\Component;
 
 class CheckboxCombos extends Component
 {
@@ -16,71 +16,71 @@ class CheckboxCombos extends Component
     public array $possibleCombinations = [
         [
             'code' => '1',
-            'label' => 'Removal - Mattress'
+            'label' => 'Removal - Mattress',
         ],
         [
             'code' => '2',
-            'label' => 'Removal - Adj Base'
+            'label' => 'Removal - Adj Base',
         ],
         [
             'code' => '13',
-            'label' => 'Removal - Mattress + Removal - Foundation'
+            'label' => 'Removal - Mattress + Removal - Foundation',
         ],
         [
             'code' => '12',
-            'label' => 'Removal - Mattress + Removal - Adj Base'
+            'label' => 'Removal - Mattress + Removal - Adj Base',
         ],
         [
             'code' => '123',
-            'label' => 'Removal - Mattress + Removal - Adj Base + Removal - Foundation'
+            'label' => 'Removal - Mattress + Removal - Adj Base + Removal - Foundation',
         ],
         [
             'code' => '5',
-            'label' => 'Setup - Adj Base'
+            'label' => 'Setup - Adj Base',
         ],
         [
             'code' => '25',
-            'label' => 'Setup - Adj Base + Removal - Adj Base'
+            'label' => 'Setup - Adj Base + Removal - Adj Base',
         ],
         [
             'code' => '15',
-            'label' => 'Setup - Adj Base + Removal - Mattress'
+            'label' => 'Setup - Adj Base + Removal - Mattress',
         ],
         [
             'code' => '135',
-            'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Foundation'
+            'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Foundation',
         ],
         [
             'code' => '125',
-            'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Adj Base'
+            'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Adj Base',
         ],
         [
             'code' => '1235',
-            'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Adj Base + Removal - Foundation'
+            'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Adj Base + Removal - Foundation',
         ],
         [
             'code' => '4',
-            'label' => 'Setup - Mattress'
+            'label' => 'Setup - Mattress',
         ],
         [
             'code' => '24',
-            'label' => 'Setup - Mattress + Removal - Adj Base'
+            'label' => 'Setup - Mattress + Removal - Adj Base',
         ],
         [
             'code' => '14',
-            'label' => 'Setup - Mattress + Removal - Mattress'
+            'label' => 'Setup - Mattress + Removal - Mattress',
         ],
         [
             'code' => '134',
-            'label' => 'Setup - Mattress + Removal - Mattress + Removal - Foundation'
+            'label' => 'Setup - Mattress + Removal - Mattress + Removal - Foundation',
         ],
         [
             'code' => '124',
-            'label' => 'Setup - Mattress + Removal - Mattress + Removal - Adj Base'
+            'label' => 'Setup - Mattress + Removal - Mattress + Removal - Adj Base',
         ],
         [
             'code' => '1234',
-            'label' => 'Setup - Mattress + Removal - Mattress + Removal - Adj Base + Removal - Foundation'
+            'label' => 'Setup - Mattress + Removal - Mattress + Removal - Adj Base + Removal - Foundation',
         ],
     ];
 
@@ -101,7 +101,7 @@ class CheckboxCombos extends Component
 
     protected function getProductsForCollectionCombobox(): array
     {
-//        dd(Product::where('shopify_id', settings(GoLoadUpSettings::class, 'white_glove_shopify_product_ID'))?->first()->variants);
+        //        dd(Product::where('shopify_id', settings(GoLoadUpSettings::class, 'white_glove_shopify_product_ID'))?->first()->variants);
         return Product::where('shopify_id', settings(GoLoadUpSettings::class, 'white_glove_shopify_product_ID'))?->first()->variants->map(fn (ProductVariant $product) => [
             'key' => $product->id,
             'value' => $product->title,
@@ -115,7 +115,6 @@ class CheckboxCombos extends Component
     {
         $this->selectedProductsIds[] = $productId;
         $this->selectedProducts->push(Product::find($productId));
-//        $this->markAsDirty();
+        //        $this->markAsDirty();
     }
-
 }

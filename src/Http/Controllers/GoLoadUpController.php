@@ -39,6 +39,6 @@ class GoLoadUpController
 
     public function checkBoxCombos()
     {
-        return view('go-load-up::models.checkbox-combos.index',);
+        return view('go-load-up::models.checkbox-combos.index', );
     }
 }

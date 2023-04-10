@@ -2,9 +2,9 @@
 
 namespace Astrogoat\GoLoadUp;
 
+use Astrogoat\GoLoadUp\Http\Livewire\CheckboxCombos\CheckboxCombos;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\GoLoadUpProductVariantForm;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodeForm;
-use Astrogoat\GoLoadUp\Http\Livewire\CheckboxCombos\CheckboxCombos;
 use Astrogoat\GoLoadUp\Http\Livewire\Upload\CsvUploadForm;
 use Astrogoat\GoLoadUp\Models\ZipCode;
 use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
