@@ -27,7 +27,7 @@
                             <div class="text-xs text-gray-500 ">{{ $possibleCombinations[$key]['label'] }}</div>
                         </div>
                         <div class="flex flex-col">
-                            <select wire:change="readyToSave" class="text-sm" wire:model="possibleCombinations.{{ $key }}.products.{{ count($products['products']) }}">
+                            <select class="text-sm" wire:model="possibleCombinations.{{ $key }}.products.{{ count($products['products']) }}">
                                 <option> Select product </option>
                                 @foreach($this->getProductsForCollectionCombobox() as $item)
                                     <option value="{{ $item['key'] }}">{{ $item['value'] }}</option>
