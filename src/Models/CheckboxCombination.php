@@ -2,8 +2,6 @@
 
 namespace Astrogoat\GoLoadUp\Models;
 
-use Astrogoat\Shopify\Models\Product;
-use Astrogoat\Shopify\Models\ProductVariant;
 use Helix\Fabrick\Icon;
 use Helix\Lego\Models\Model as LegoModel;
 
