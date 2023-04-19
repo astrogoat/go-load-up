@@ -3,11 +3,9 @@
 namespace Astrogoat\GoLoadUp\Http\Livewire\CheckboxCombos;
 
 use Astrogoat\GoLoadUp\Models\CheckboxCombination;
-use Astrogoat\GoLoadUp\Models\GoLoadUpProduct;
 use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
 use Astrogoat\Shopify\Models\Product;
 use Astrogoat\Shopify\Models\ProductVariant;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection as SupportCollection;
 use Livewire\Component;
 
@@ -24,207 +22,207 @@ class CheckboxCombos extends Component
         '1' => [
             'code' => '1',
             'label' => 'Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '2' => [
             'code' => '2',
             'label' => 'Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '3' => [
             'code' => '13',
             'label' => 'Removal - Mattress + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '4' => [
             'code' => '12',
             'label' => 'Removal - Mattress + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '5' => [
             'code' => '123',
             'label' => 'Removal - Mattress + Removal - Adj Base + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '6' => [
             'code' => '5',
             'label' => 'Setup - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '7' => [
             'code' => '25',
             'label' => 'Setup - Adj Base + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '8' => [
             'code' => '15',
             'label' => 'Setup - Adj Base + Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '9' => [
             'code' => '135',
             'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '10' => [
             'code' => '125',
             'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
-        '11' =>  [
+        '11' => [
             'code' => '1235',
             'label' => 'Setup - Adj Base + Removal - Mattress + Removal - Adj Base + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '12' => [
             'code' => '4',
             'label' => 'Setup - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '13' => [
             'code' => '24',
             'label' => 'Setup - Mattress + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '14' => [
             'code' => '14',
             'label' => 'Setup - Mattress + Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '15' => [
             'code' => '134',
             'label' => 'Setup - Mattress + Removal - Mattress + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '16' => [
             'code' => '124',
             'label' => 'Setup - Mattress + Removal - Mattress + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '17' => [
             'code' => '1234',
             'label' => 'Setup - Mattress + Removal - Mattress + Removal - Adj Base + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '18' => [
             'code' => '46',
             'label' => 'Setup - Mattress + Setup - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '19' => [
             'code' => '246',
             'label' => 'Setup - Mattress + Setup - Foundation + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '20' => [
             'code' => '146',
             'label' => 'Setup - Mattress + Setup - Foundation + Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '21' => [
             'code' => '1346',
             'label' => 'Setup - Mattress + Setup - Foundation + Removal - Mattress + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '22' => [
             'code' => '1246',
             'label' => 'Setup - Mattress + Setup - Foundation + Removal - Mattress + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '23' => [
             'code' => '12346',
             'label' => 'Setup - Mattress + Setup - Foundation + Removal - Mattress + Removal - Adj Base + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '24' => [
             'code' => '45',
             'label' => 'Setup - Mattress + Setup - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '25' => [
             'code' => '245',
             'label' => 'Setup - Mattress + Setup - Adj Base + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '26' => [
             'code' => '145',
             'label' => 'Setup - Mattress + Setup - Adj Base + Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '27' => [
             'code' => '1345',
             'label' => 'Setup - Mattress + Setup - Adj Base + Removal - Mattress + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '28' => [
             'code' => '1245',
             'label' => 'Setup - Mattress + Removal - Mattress + Removal - Adj Base + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '29' => [
             'code' => '12345',
             'label' => 'Setup - Mattress + Setup - Adj Base + Removal - Mattress + Removal - Adj Base + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '30' => [
             'code' => '456',
             'label' => 'Setup - Mattress + Setup - Adj Base + Setup - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '31' => [
             'code' => '2456',
             'label' => 'Setup - Mattress + Setup - Adj Base + Setup - Foundation + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '32' => [
             'code' => '1456',
             'label' => 'Setup - Mattress + Setup - Adj Base + Setup - Foundation + Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '33' => [
             'code' => '13456',
             'label' => 'Setup - Mattress + Setup - Adj Base + Setup - Foundation + Removal - Mattress + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '34' => [
             'code' => '12456',
             'label' => 'Setup - Mattress + Setup - Adj Base + Setup - Foundation + Removal - Mattress + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '35' => [
             'code' => '123456',
             'label' => 'Setup - Mattress + Setup - Adj Base + Setup - Foundation + Removal - Mattress + Removal - Adj Base + Removal - Foundation',
-            'products' => []
+            'products' => [],
         ],
         '36' => [
             'code' => '10',
             'label' => 'CA Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '37' => [
             'code' => '1250',
             'label' => 'CA Setup - Adj Base + Removal - Mattress + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
         '38' => [
             'code' => '150',
             'label' => 'CA Setup - Adj Base + Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '39' => [
             'code' => '1460',
             'label' => 'CA Setup - Mattress + Setup - Foundation + Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '40' => [
             'code' => '1450',
             'label' => 'CA Setup - Mattress + Setup - Adj Base + Removal - Mattress',
-            'products' => []
+            'products' => [],
         ],
         '41' => [
             'code' => '1234560',
             'label' => 'CA Setup - Mattress + Setup - Adj Base + Setup - Foundation + Removal - Mattress + Removal - Adj Base',
-            'products' => []
+            'products' => [],
         ],
     ];
 
@@ -235,12 +233,13 @@ class CheckboxCombos extends Component
 
         // Replace initial data if configurations already exists in the db.
         if($combinationsFromDB->isNotEmpty()) {
-            $decodedJsonData = $combinationsFromDB->map( function ($item) {
+            $decodedJsonData = $combinationsFromDB->map(function ($item) {
                 $item = [
                     'code' => $item->code,
                     'label' => $item->label,
-                    'products' => json_decode($item->products)
+                    'products' => json_decode($item->products),
                 ];
+
                 return $item;
             });
             $this->possibleCombinations = $decodedJsonData->toArray();
@@ -293,7 +292,7 @@ class CheckboxCombos extends Component
             CheckboxCombination::create([
                 'code' => $item['code'],
                 'label' => $item['label'],
-                'products' => json_encode($item['products'])
+                'products' => json_encode($item['products']),
             ]);
         }
 
