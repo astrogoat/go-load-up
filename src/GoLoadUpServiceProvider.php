@@ -40,7 +40,7 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
                         [
                             Link::to(route('lego.go-load-up.product-match.index'), 'Product Match'),
                             Link::to(route('lego.go-load-up.zip-codes.index'), 'Zip Codes'),
-                            Link::to(route('lego.go-load-up.checkbox-combos.index'), 'Checkbox Combos'),
+                            Link::to(route('lego.go-load-up.checkbox-combos.index'), 'Cart Checkbox Combinations'),
                         ],
                         Icon::TRUCK,
                     )->after('Pages'),
