@@ -146,7 +146,7 @@ class GoLoadUpProductVariantForm extends Form
 
     public function getVariantsOfDefaultProduct()
     {
-        $defaultProduct = Product::where('shopify_id', settings(GoLoadUpSettings::class, 'white_glove_shopify_product_ID'))?->first();
+        $defaultProduct = Product::where('shopify_id', settings(GoLoadUpSettings::class, 'white_glove_shopify_product_id'))?->first();
         if (! ($defaultProduct == null)) {
             return $defaultProduct->variants;
         }
