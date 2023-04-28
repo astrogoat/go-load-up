@@ -6,7 +6,7 @@
     title="Zipcode Upload"
     :breadcrumbs="[
             ['title' => 'Home', 'url' => route('lego.dashboard')],
-            ['title' => 'Zip Codes', 'url' => route('lego.go-load-up.zip-codes.index')],
+            ['title' => 'Zip codes', 'url' => route('lego.go-load-up.zip-codes.index')],
             ['title' => 'Zip code upload' ],
 
         ]"
@@ -24,5 +24,3 @@
 
     </x-fab::layouts.main-with-aside>
 </x-fab::layouts.page>
-
-

@@ -1,10 +1,10 @@
 <x-fab::layouts.page
     title="{{ $model->name ?: 'Untitled' }}"
     :breadcrumbs="[
-            ['title' => 'Home', 'url' => route('lego.dashboard')],
-            ['title' => 'Zip Codes', 'url' => route('lego.go-load-up.zip-codes.index')],
-            ['title' => $model->name ?: 'New Zip Code' ],
-        ]"
+        ['title' => 'Go Load Up'],
+        ['title' => 'Zip codes', 'url' => route('lego.go-load-up.zip-codes.index')],
+        ['title' => $model ? $model->zip . ' (' . $model->name . ')' : 'New Zip Code' ],
+    ]"
     x-data=""
     x-on:keydown.meta.s.window.prevent="$wire.call('save')" {{-- For Mac --}}
     x-on:keydown.ctrl.s.window.prevent="$wire.call('save')" {{-- For PC  --}}
@@ -14,29 +14,28 @@
     </x-slot>
     <x-fab::layouts.main-with-aside>
         <x-fab::layouts.panel>
-            <x-fab::forms.input
-                label="Zip Code"
-                wire:model="model.zip"
-            />
+            <div class="flex gap-4 w-full">
+                <x-fab::forms.input
+                    label="Zip code"
+                    wire:model="model.zip"
+                />
+                <x-fab::forms.input
+                    label="Name"
+                    wire:model="model.name"
+                    class="flex-1"
+                />
+            </div>
 
-        </x-fab::layouts.panel>
-
-        <x-fab::layouts.panel>
-            <x-fab::forms.input
-                label="Name"
-                wire:model="model.name"
+            <x-fab::forms.checkbox
+                label="Zip code is eligible"
+                wire:model="model.is_eligible"
+                help="If checked, the zip code is eligible for White Glove Services."
             />
 
             <x-fab::forms.checkbox
-                label="Is California zip code"
+                label="Zip code is located in California"
                 wire:model="model.is_california"
-                help="If checked this indicates that this zip code is A California zip code."
-            />
-
-            <x-fab::forms.checkbox
-                label="Should be enabled"
-                wire:model="model.status"
-                help="If checked, the zip code is eligible for White Glove Services. To make the zip code ineligible for White Glove, uncheck this box. The box is checked by default with the CSV file is added to Strata."
+                help="If checked, the zip code is a Californian zip code."
             />
         </x-fab::layouts.panel>
 

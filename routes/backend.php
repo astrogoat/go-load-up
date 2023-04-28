@@ -1,15 +1,16 @@
 <?php
 use Astrogoat\GoLoadUp\Http\Controllers\GoLoadUpController;
+use Astrogoat\GoLoadUp\Http\Livewire\Models\CartRequirements;
+use Astrogoat\GoLoadUp\Http\Livewire\Models\Services;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
     'as' => 'go-load-up.',
     'prefix' => 'go-load-up/'
 ], function () {
-
     Route::group([
         'as' => 'zip-codes.',
-        'prefix' => 'zip-codes/'
+        'prefix' => 'zip-codes'
     ], function () {
         Route::get('/', [GoLoadUpController::class, 'index'])->name('index');
         Route::get('/{zipCode}/edit', [GoLoadUpController::class, 'edit'])->name('edit');
@@ -17,20 +18,18 @@ Route::group([
     });
 
     Route::group([
-        'as' => 'product-match.',
-        'prefix' => 'product-match/'
+        'as' => 'cart-requirements.',
+        'prefix' => 'cart-requirements'
     ], function () {
-        Route::get('/', [GoLoadUpController::class, 'defaultProductOptions'])->name('index');
-        Route::get('/create', [GoLoadUpController::class, 'createGoLoadUpProduct'])->name('create');
-        Route::get('/{goLoadUpProduct}/edit', [GoLoadUpController::class, 'editGoLoadUpProduct'])->name('edit');
+        Route::get('/', CartRequirements\Index::class)->name('index');
+        Route::get('create', CartRequirements\Form::class)->name('create');
+        Route::get('{cartRequirement}/edit', CartRequirements\Form::class)->name('edit');
     });
 
     Route::group([
-        'as' => 'checkbox-combos.',
-        'prefix' => 'checkbox-combos/'
+        'as' => 'services.',
+        'prefix' => 'services'
     ], function () {
-        Route::get('/', [GoLoadUpController::class, 'checkBoxCombos'])->name('index');
+        Route::get('/', Services\Index::class)->name('index');
     });
-
 });
-

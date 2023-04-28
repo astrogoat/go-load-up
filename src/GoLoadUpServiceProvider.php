@@ -2,9 +2,10 @@
 
 namespace Astrogoat\GoLoadUp;
 
-use Astrogoat\GoLoadUp\Http\Livewire\CheckboxCombos\CheckboxCombos;
-use Astrogoat\GoLoadUp\Http\Livewire\Models\GoLoadUpProductVariantForm;
+use Astrogoat\Cart\Events\CheckingOut;
+use Astrogoat\GoLoadUp\Http\Livewire\Models\CartRequirements;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodeForm;
+use Astrogoat\GoLoadUp\Http\Livewire\Models\Services;
 use Astrogoat\GoLoadUp\Http\Livewire\Upload\CsvUploadForm;
 use Astrogoat\GoLoadUp\Models\ZipCode;
 use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
@@ -14,6 +15,7 @@ use Helix\Lego\LegoManager;
 use Helix\Lego\Menus\Lego\Group;
 use Helix\Lego\Menus\Lego\Link;
 use Helix\Lego\Menus\Menu;
+use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -38,9 +40,9 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
                     Group::add(
                         'GoLoadUp',
                         [
-                            Link::to(route('lego.go-load-up.product-match.index'), 'Product Match'),
-                            Link::to(route('lego.go-load-up.zip-codes.index'), 'Zip Codes'),
-                            Link::to(route('lego.go-load-up.checkbox-combos.index'), 'Cart Checkbox Combinations'),
+                            Link::to(route('lego.go-load-up.services.index'), 'Services'),
+                            Link::to(route('lego.go-load-up.zip-codes.index'), 'Zip codes'),
+                            Link::to(route('lego.go-load-up.cart-requirements.index'), 'Cart requirements'),
                         ],
                         Icon::TRUCK,
                     )->after('Pages'),
@@ -71,9 +73,16 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
             ], 'go-load-up-assets');
         }
 
+        Event::listen(CheckingOut::class, function (CheckingOut $event) {
+            if (GoLoadUpSettings::isEnabled()) {
+                resolve(GoLoadUp::class)->validateCartRequirement();
+            }
+        });
+
         Livewire::component('astrogoat.go-load-up.zip-codes.form', ZipCodeForm::class);
-        Livewire::component('astrogoat.go-load-up.product.form', GoLoadUpProductVariantForm::class);
+        Livewire::component('astrogoat.go-load-up.http.livewire.models.services.index', Services\Index::class);
+        Livewire::component('astrogoat.go-load-up.http.livewire.models.cart-requirements.index', CartRequirements\Index::class);
+        Livewire::component('astrogoat.go-load-up.http.livewire.models.cart-requirements.form', CartRequirements\Form::class);
         Livewire::component('astrogoat.go-load-up.upload.form', CsvUploadForm::class);
-        Livewire::component('astrogoat.go-load-up.checkbox-combos.form', CheckboxCombos::class);
     }
 }

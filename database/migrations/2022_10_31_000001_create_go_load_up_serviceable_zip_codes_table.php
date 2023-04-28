@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('zip');
             $table->string('name');
-            $table->boolean('is_california')->default(0);
-            $table->boolean('status')->default(1);
+            $table->boolean('is_california')->default(false);
+            $table->boolean('is_eligible')->default(true);
             $table->timestamps();
         });
     }

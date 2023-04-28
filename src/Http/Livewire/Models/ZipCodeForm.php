@@ -16,7 +16,7 @@ class ZipCodeForm extends Form
             'model.zip' => 'required',
             'model.name' => 'required',
             'model.is_california' => 'required',
-            'model.status' => 'required',
+            'model.is_serviceable' => 'required',
         ];
     }
 
@@ -35,10 +35,5 @@ class ZipCodeForm extends Form
     public function view()
     {
         return 'go-load-up::models.zip-codes.form';
-    }
-
-    public function model(): Model
-    {
-        return ZipCode::class;
     }
 }
