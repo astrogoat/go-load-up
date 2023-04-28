@@ -8,12 +8,16 @@ use Astrogoat\GoLoadUp\GoLoadUp;
 use Astrogoat\GoLoadUp\Models\Service;
 use Astrogoat\Shopify\Models\ProductVariant;
 use Helix\Fabrick\Notification;
+use Helix\Lego\Http\Livewire\Traits\InteractsWithTopBar;
 use Helix\Lego\Http\Livewire\Traits\ProvidesFeedback;
 use Livewire\Component;
 
 class Index extends Component
 {
     use ProvidesFeedback;
+    use InteractsWithTopBar;
+
+    protected $listeners = ['save'];
 
     /**
      * This is the list of all available services that we can offer to our
@@ -288,6 +292,13 @@ class Index extends Component
     {
         unset($this->possibleCombinations[$key]['product_variant_ids'][$loopIndex]);
         $this->possibleCombinations[$key]['product_variant_ids'] = array_values($this->possibleCombinations[$key]['product_variant_ids']);
+
+        $this->markAsDirty();
+    }
+
+    public function updatedPossibleCombinations()
+    {
+        $this->markAsDirty();
     }
 
     public function save(): void
@@ -303,6 +314,8 @@ class Index extends Component
         }
 
         $this->notify(Notification::success('Saved')->autoDismiss());
+
+        $this->markAsClean();
     }
 
     public function render()

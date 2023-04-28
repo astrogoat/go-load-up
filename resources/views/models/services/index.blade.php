@@ -9,10 +9,6 @@
     x-on:keydown.meta.s.window.prevent="$wire.call('save')"  {{-- For Mac --}}
     x-on:keydown.ctrl.s.window.prevent="$wire.call('save')"  {{-- For PC --}}
 >
-    <x-slot name="actions">
-        <x-fab::elements.button wire:click="save">Save</x-fab::elements.button>
-    </x-slot>
-
     <x-lego::feedback.errors class="mb-4" />
 
     <x-fab::layouts.panel
