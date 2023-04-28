@@ -21,7 +21,7 @@
             @foreach($productVariants as $variant)
                 <x-fab::lists.table.row :odd="$loop->odd">
                     <x-fab::lists.table.column full primary>
-                        <a href="{{ route('lego.go-load-up.product-match.edit', $variant) }}">{{ $variant->parentProduct->title }}</a>
+                        <a href="{{ route('lego.go-load-up.product-match.edit', $variant) }}">{{ $variant->parentProduct?->title }}</a>
                     </x-fab::lists.table.column>
                     <x-fab::lists.table.column align="right" slim>
                         <a href="{{ route('lego.go-load-up.product-match.edit', $variant) }}">Edit</a>
