@@ -7,7 +7,6 @@ use Astrogoat\GoLoadUp\GoLoadUp;
 use Astrogoat\Shopify\Models\Product;
 use Astrogoat\Shopify\Models\ProductVariant;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

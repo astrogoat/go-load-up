@@ -53,7 +53,7 @@ class GoLoadUp
         return implode('', $code); // Generate the string for of the code.
     }
 
-    public function getWhiteGloveProductVariantsInCart() : Collection
+    public function getWhiteGloveProductVariantsInCart(): Collection
     {
         $whiteGloveProduct = Product::query()
             ->where('shopify_id', resolve(GoLoadUpSettings::class)->white_glove_shopify_product_id)
@@ -64,7 +64,7 @@ class GoLoadUp
         });
     }
 
-    public function getNonWhiteGloveProductVariantsInCart() : Collection
+    public function getNonWhiteGloveProductVariantsInCart(): Collection
     {
         $whiteGloveProduct = Product::query()
             ->where('shopify_id', resolve(GoLoadUpSettings::class)->white_glove_shopify_product_id)

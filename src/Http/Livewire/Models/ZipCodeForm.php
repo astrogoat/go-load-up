@@ -2,9 +2,7 @@
 
 namespace Astrogoat\GoLoadUp\Http\Livewire\Models;
 
-use Astrogoat\GoLoadUp\Models\ZipCode;
 use Helix\Lego\Http\Livewire\Models\Form;
-use Helix\Lego\Models\Model;
 
 class ZipCodeForm extends Form
 {

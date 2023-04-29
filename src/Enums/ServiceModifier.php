@@ -8,16 +8,14 @@ enum ServiceModifier: string
 
     public function code(): string
     {
-        return match($this)
-        {
+        return match($this) {
             self::CALIFORNIA => 0,
         };
     }
 
     public function label(): string
     {
-        return match($this)
-        {
+        return match($this) {
             self::CALIFORNIA => 'California',
         };
     }

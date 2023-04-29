@@ -203,32 +203,32 @@ class Index extends Component
         [
             'removal' => [ServicePart::MATTRESS],
             'setup' => [],
-            'modifiers' => [ServiceModifier::CALIFORNIA]
+            'modifiers' => [ServiceModifier::CALIFORNIA],
         ],
         [
             'removal' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE],
             'setup' => [ServicePart::ADJUSTABLE_BASE],
-            'modifiers' => [ServiceModifier::CALIFORNIA]
+            'modifiers' => [ServiceModifier::CALIFORNIA],
         ],
         [
             'removal' => [ServicePart::MATTRESS],
             'setup' => [ServicePart::ADJUSTABLE_BASE],
-            'modifiers' => [ServiceModifier::CALIFORNIA]
+            'modifiers' => [ServiceModifier::CALIFORNIA],
         ],
         [
             'removal' => [ServicePart::MATTRESS],
             'setup' => [ServicePart::MATTRESS, ServicePart::FOUNDATION],
-            'modifiers' => [ServiceModifier::CALIFORNIA]
+            'modifiers' => [ServiceModifier::CALIFORNIA],
         ],
         [
             'removal' => [ServicePart::MATTRESS],
             'setup' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE],
-            'modifiers' => [ServiceModifier::CALIFORNIA]
+            'modifiers' => [ServiceModifier::CALIFORNIA],
         ],
         [
             'removal' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE],
             'setup' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE, ServicePart::FOUNDATION],
-            'modifiers' => [ServiceModifier::CALIFORNIA]
+            'modifiers' => [ServiceModifier::CALIFORNIA],
         ],
     ];
 

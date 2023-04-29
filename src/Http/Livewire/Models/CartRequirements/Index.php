@@ -24,7 +24,6 @@ class Index extends BaseIndex
         return 'title';
     }
 
-
     public function render()
     {
         return view('go-load-up::models.cart-requirements.index', [

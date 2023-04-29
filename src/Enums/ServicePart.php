@@ -10,8 +10,7 @@ enum ServicePart: string
 
     public function code(ServiceType $serviceType): string
     {
-        return match([$serviceType, $this])
-        {
+        return match([$serviceType, $this]) {
             [ServiceType::REMOVAL, ServicePart::MATTRESS] => 1,
             [ServiceType::REMOVAL, ServicePart::ADJUSTABLE_BASE] => 2,
             [ServiceType::REMOVAL, ServicePart::FOUNDATION] => 3,

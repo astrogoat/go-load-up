@@ -4,8 +4,8 @@ namespace Astrogoat\GoLoadUp;
 
 use Astrogoat\Cart\Events\CheckingOut;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\CartRequirements;
-use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodeForm;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\Services;
+use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodeForm;
 use Astrogoat\GoLoadUp\Http\Livewire\Upload\CsvUploadForm;
 use Astrogoat\GoLoadUp\Models\ZipCode;
 use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
