@@ -161,8 +161,8 @@ class Index extends Component
             'modifiers' => [],
         ],
         [
-            'removal' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE, ServicePart::FOUNDATION],
-            'setup' => [ServicePart::MATTRESS],
+            'removal' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE],
+            'setup' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE],
             'modifiers' => [],
         ],
         [
