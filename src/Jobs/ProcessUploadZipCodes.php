@@ -38,8 +38,8 @@ class ProcessUploadZipCodes implements shouldQueue
             $zipcode = new ZipCode();
             $zipcode->zip = $zipcodeData['zip'];
             $zipcode->name = $zipcodeData['name'];
-            $zipcode->is_california = $zipcodeData['California Boolean'] == 'TRUE';
-            $zipcode->status = true;
+            $zipcode->is_california = ($zipcodeData['California Boolean'] ?? false) == 'TRUE';
+            $zipcode->is_eligible = true;
             $zipcode->save();
         }
 

@@ -40,7 +40,7 @@ class CsvUploadForm extends Component
                 $zipcode_chunks = SimpleExcelReader::create($this->file->getRealPath(), 'csv')
                     ->getRows()->chunk(300)->all();
 
-                Flash::success('Zip Codes are Importing...');
+                Flash::success('Importing zip codes...');
 
                 foreach ($zipcode_chunks as $index => $chunkData) {
                     ProcessUploadZipCodes::dispatch(zipcodes: $chunkData, isLastBatch: count($zipcode_chunks) == $index + 1);

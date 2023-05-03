@@ -8,12 +8,16 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('go-load-up_table', function (Blueprint $table) {
+        Schema::create('go_load_up_services', function (Blueprint $table) {
             $table->id();
-
-            // add fields
-
+            $table->integer('code');
+            $table->json('product_variant_ids');
             $table->timestamps();
         });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('go_load_up_services');
     }
 };
