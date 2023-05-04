@@ -25,7 +25,7 @@ class GoLoadUp
 
     public function getZipCodeModel($zipCode): ZipCode|null
     {
-        return ZipCode::all()->where('zip', $zipCode)->first();
+        return ZipCode::query()->where('zip', $zipCode)->first();
     }
 
     public function generateCodeFromCombination(array $combination): string
