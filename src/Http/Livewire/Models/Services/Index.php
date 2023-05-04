@@ -230,6 +230,11 @@ class Index extends Component
             'setup' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE, ServicePart::FOUNDATION],
             'modifiers' => [ServiceModifier::CALIFORNIA],
         ],
+        [
+            'removal' => [ServicePart::MATTRESS],
+            'setup' => [ServicePart::MATTRESS, ServicePart::ADJUSTABLE_BASE, ServicePart::FOUNDATION],
+            'modifiers' => [ServiceModifier::CALIFORNIA],
+        ],
     ];
 
     public function mount()
