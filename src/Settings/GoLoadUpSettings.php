@@ -29,16 +29,13 @@ class GoLoadUpSettings extends AppSettings
 
     public function californiaRemovalOnlyMattressShopifyIdOptions(): array
     {
-        dd(
-            resolve(GoLoadUp::class)->getWhiteGloveProduct()?->variants->toArray() ?? []
-        );
 
-        return Product::query()->where('shopify_id', $this->white_glove_shopify_product_id)->first()?->variants->pluck('title', 'shopify_id')->toArray() ?? [];
+        return resolve(GoLoadUp::class)->getWhiteGloveProduct()?->variants->pluck('title', 'shopify_id')->toArray() ?? [];
     }
 
     public function removalOnlyMattressShopifyIdOptions(): array
     {
-        return Product::query()->where('shopify_id', $this->white_glove_shopify_product_id)->first()?->variants->pluck('title', 'shopify_id')->toArray() ?? [];
+        return resolve(GoLoadUp::class)->getWhiteGloveProduct()?->variants->pluck('title', 'shopify_id')->toArray() ?? [];
     }
 
     public function labels(): array
