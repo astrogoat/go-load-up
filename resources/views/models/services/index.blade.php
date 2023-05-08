@@ -35,7 +35,6 @@
                                 </div>
                             @endforeach
                         </div>
-
                         <x-fab::forms.select
                             wire:model="possibleCombinations.{{ $key }}.product_variant_ids.{{ count($combination['product_variant_ids']) }}"
                         >

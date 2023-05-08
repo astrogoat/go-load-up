@@ -29,7 +29,6 @@ class GoLoadUpSettings extends AppSettings
 
     public function californiaRemovalOnlyMattressShopifyIdOptions(): array
     {
-
         return resolve(GoLoadUp::class)->getWhiteGloveProduct()?->variants->pluck('title', 'shopify_id')->toArray() ?? [];
     }
 
