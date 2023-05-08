@@ -32,6 +32,7 @@ class GoLoadUpSettings extends AppSettings
             $this->white_glove_shopify_product_id,
             Product::query()->where('shopify_id', $this->white_glove_shopify_product_id)->first()?->variants->pluck('title', 'shopify_id')->toArray()
         );
+
         return Product::query()->where('shopify_id', $this->white_glove_shopify_product_id)->first()?->variants->pluck('title', 'shopify_id')->toArray() ?? [];
     }
 
