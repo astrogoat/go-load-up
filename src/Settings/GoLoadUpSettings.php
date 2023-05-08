@@ -2,6 +2,7 @@
 
 namespace Astrogoat\GoLoadUp\Settings;
 
+use Astrogoat\GoLoadUp\GoLoadUp;
 use Astrogoat\Shopify\Models\Product;
 use Helix\Lego\Settings\AppSettings;
 use Illuminate\Validation\Rule;
@@ -29,8 +30,7 @@ class GoLoadUpSettings extends AppSettings
     public function californiaRemovalOnlyMattressShopifyIdOptions(): array
     {
         dd(
-            $this->white_glove_shopify_product_id,
-            Product::query()->where('shopify_id', $this->white_glove_shopify_product_id)->first()?->variants->pluck('title', 'shopify_id')->toArray()
+            resolve(GoLoadUp::class)->getWhiteGloveProduct()?->variants->toArray() ?? []
         );
 
         return Product::query()->where('shopify_id', $this->white_glove_shopify_product_id)->first()?->variants->pluck('title', 'shopify_id')->toArray() ?? [];
