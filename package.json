@@ -7,7 +7,10 @@
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "release": "npm version minor && git push origin && git push origin $(git tag --sort=creatordate | tail -n 1)"
+        "release": "npm run release:minor",
+        "release:patch": "npm version patch && git push origin && git push origin $(git tag --sort=creatordate | tail -n 1)",
+        "release:minor": "npm version minor && git push origin && git push origin $(git tag --sort=creatordate | tail -n 1)",
+        "release:major": "npm version major && git push origin && git push origin $(git tag --sort=creatordate | tail -n 1)"
     },
     "repository": {
         "type": "git",
