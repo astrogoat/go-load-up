@@ -110,13 +110,13 @@ class CartRequirement extends Model
 
         $nonWhiteGloveProductVariantsInCart = resolve(GoLoadUp::class)->getNonWhiteGloveProductVariantsInCart();
 
-        $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids,);
+        $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids, );
 
         if (! is_null($firstRequirementsQuantityError)) {
             return $firstRequirementsQuantityError;
         }
 
-        $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids,);
+        $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids, );
 
         if (! is_null($secondRequirementsQuantityError)) {
             return $secondRequirementsQuantityError;
@@ -135,15 +135,17 @@ class CartRequirement extends Model
 
         foreach ($requirementsMet as $id) {
 
-            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->reject(function($item) use ($id) {
+            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->reject(function ($item) use ($id) {
                 return $item->id !== $id;
             });
 
-            if(! ($retrievedCartItem->first()->quantity === $cartItem->quantity)){
+            if(! ($retrievedCartItem->first()->quantity === $cartItem->quantity)) {
                 $this->getStatusAndErrorMessage($cartItem, $retrievedCartItem->first(), false);
+
                 return $this->getStatusAndErrorMessage($cartItem, $retrievedCartItem->first(), false);
             }
         }
+
         return null;
     }
 
