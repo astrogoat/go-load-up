@@ -96,6 +96,35 @@ class GoLoadUp
                 IneligibleWhiteGloveItemsFoundInCart::class,
                 $requirement?->errorMessage()
             );
+
+        };
+
+        $this->validateCartRequirementQuantity();
+    }
+
+    /**
+     * @throws IneligibleWhiteGloveItemsFoundInCart
+     * @throws Throwable
+     */
+    public function validateCartRequirementQuantity(): void
+    {
+        /** @var CartItem $cartItem */
+        foreach ($this->getWhiteGloveProductVariantsInCart() as $cartItem) {
+            $variant = $cartItem->findModel();
+
+            if (! $variant) {
+                continue;
+            }
+
+            $requirement = CartRequirement::findByShopifyProductVariant($variant);
+
+            [$status, $message] = $requirement?->quantityIsEligible($cartItem);
+
+            throw_unless(
+                $status ?? true,
+                IneligibleWhiteGloveItemsFoundInCart::class,
+                $message
+            );
         };
     }
 }

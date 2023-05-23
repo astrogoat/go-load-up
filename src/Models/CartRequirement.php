@@ -95,6 +95,63 @@ class CartRequirement extends Model
         return $firstRequirementsMet && $secondRequirementsMet;
     }
 
+    /**
+     * Quantity for White Glove service product
+     * should match the quantity of the required product.
+     *
+     * @return bool
+     */
+    public function quantityIsEligible(CartItem $cartItem): array
+    {
+
+        if (empty($this->first_set_of_required_shopify_product_ids)) {
+            return $this->getStatusAndErrorMessage(null, null, true);
+        }
+
+        $nonWhiteGloveProductVariantsInCart = resolve(GoLoadUp::class)->getNonWhiteGloveProductVariantsInCart();
+
+        $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids,);
+
+        if (! is_null($firstRequirementsQuantityError)) {
+            return $firstRequirementsQuantityError;
+        }
+
+        $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids,);
+
+        if (! is_null($secondRequirementsQuantityError)) {
+            return $secondRequirementsQuantityError;
+        }
+
+        return $this->getStatusAndErrorMessage(null, null, true);
+
+    }
+
+    public function catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array|null
+    {
+        $requirementsMet = $nonWhiteGloveProductVariantsInCart
+            ->map(fn (CartItem $item) => $item->getProduct()?->id ?? null)
+            ->values()
+            ->intersect($set_of_required_shopify_product_ids);
+
+        foreach ($requirementsMet as $id) {
+
+            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->reject(function($item) use ($id) {
+                return $item->id !== $id;
+            });
+
+            if(! ($retrievedCartItem->first()->quantity === $cartItem->quantity)){
+                $this->getStatusAndErrorMessage($cartItem, $retrievedCartItem->first(), false);
+                return $this->getStatusAndErrorMessage($cartItem, $retrievedCartItem->first(), false);
+            }
+        }
+        return null;
+    }
+
+    public function getStatusAndErrorMessage($whiteGloveCartItem, $requiredProductCartItem, bool $status): array
+    {
+        return [$status, $whiteGloveCartItem?->name . ' and ' . $requiredProductCartItem?->name . ' must have equal quantity value. Please adjust one of the item\'s quantity to match.']; // returns [status, message]
+    }
+
     public function errorMessage(): string
     {
         return $this->error_message;
