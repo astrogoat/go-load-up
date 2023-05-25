@@ -152,6 +152,7 @@ class CartRequirement extends Model
     public function getStatusAndErrorMessage($whiteGloveCartItem, $requiredProductCartItem, bool $status): array
     {
         $message = ' The number of '. $whiteGloveCartItem?->name . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $whiteGloveCartItem?->name . ' services matches the number of eligible products.';
+
         return [$status, $message];
     }
 
