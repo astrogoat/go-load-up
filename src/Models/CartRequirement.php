@@ -135,8 +135,8 @@ class CartRequirement extends Model
 
         foreach ($requirementsMet as $id) {
 
-            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->reject(function ($item) use ($id) {
-                return $item->id !== $id;
+            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->reject(function (CartItem $item) use ($id) {
+                return $item->getProduct()?->id != $id;
             });
 
             if($cartItem->quantity > $retrievedCartItem->first()->quantity) {
