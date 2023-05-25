@@ -139,7 +139,7 @@ class CartRequirement extends Model
                 return $item->id !== $id;
             });
 
-            if(! ($retrievedCartItem->first()->quantity === $cartItem->quantity)) {
+            if($cartItem->quantity > $retrievedCartItem->first()->quantity) {
                 $this->getStatusAndErrorMessage($cartItem, $retrievedCartItem->first(), false);
 
                 return $this->getStatusAndErrorMessage($cartItem, $retrievedCartItem->first(), false);
@@ -151,7 +151,8 @@ class CartRequirement extends Model
 
     public function getStatusAndErrorMessage($whiteGloveCartItem, $requiredProductCartItem, bool $status): array
     {
-        return [$status, $whiteGloveCartItem?->name . ' and ' . $requiredProductCartItem?->name . ' must have equal quantity value. Please adjust one of the item\'s quantity to match.']; // returns [status, message]
+        $message = ' The number of '. $whiteGloveCartItem?->name . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $whiteGloveCartItem?->name . ' services matches the number of eligible products.';
+        return [$status, $message];
     }
 
     public function errorMessage(): string
