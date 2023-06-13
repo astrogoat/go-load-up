@@ -149,9 +149,9 @@ class CartRequirement extends Model
         return null;
     }
 
-    public function getStatusAndErrorMessage($whiteGloveCartItem, $requiredProductCartItem, bool $status): array
+    public function getStatusAndErrorMessage(CartItem $whiteGloveCartItem, $requiredProductCartItem, bool $status): array
     {
-        $message = ' The number of '. $whiteGloveCartItem?->name . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $whiteGloveCartItem?->name . ' services matches the number of eligible products.';
+        $message = ' The number of '. $whiteGloveCartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $whiteGloveCartItem?->getVariant()?->title . ' services matches the number of eligible products.';
 
         return [$status, $message];
     }
