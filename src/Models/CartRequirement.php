@@ -99,7 +99,8 @@ class CartRequirement extends Model
      * Quantity for White Glove service product
      * should match the quantity of the required product.
      *
-     * @return bool
+     * @param CartItem $cartItem
+     * @return array
      */
     public function quantityIsEligible(CartItem $cartItem): array
     {
