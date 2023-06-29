@@ -109,7 +109,7 @@ class GoLoadUp
     {
         [$status, $message] = $requirement?->quantityIsEligible($cartItem) ?? [true, null];
 
-        if (!$status) {
+        if (! $status) {
             throw new IneligibleWhiteGloveItemsFoundInCart($message);
         }
     }
