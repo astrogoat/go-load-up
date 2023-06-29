@@ -130,6 +130,7 @@ class CartRequirement extends Model
     {
         $requirementsMet = $nonWhiteGloveProductVariantsInCart
             ->map(fn ($item) => $item->getProduct()?->id)
+            ->values()
             ->intersect($set_of_required_shopify_product_ids);
 
         foreach ($requirementsMet as $id) {
