@@ -96,8 +96,9 @@ class CartRequirement extends Model
     }
 
     /**
-     * Quantity for White Glove service product
-     * should match the quantity of the required product.
+     * Quantity of White Glove service product
+     * should not be greater than the quantity
+     * of the required product.
      *
      * @param CartItem $cartItem
      * @return array
@@ -106,7 +107,7 @@ class CartRequirement extends Model
     {
 
         if (empty($this->first_set_of_required_shopify_product_ids)) {
-            return $this->getStatusAndErrorMessage(null, null, true);
+            return [true, null];
         }
 
         $nonWhiteGloveProductVariantsInCart = resolve(GoLoadUp::class)->getNonWhiteGloveProductVariantsInCart();
@@ -123,38 +124,26 @@ class CartRequirement extends Model
             return $secondRequirementsQuantityError;
         }
 
-        return $this->getStatusAndErrorMessage(null, null, true);
-
+        return [true, null];
     }
 
     public function catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array|null
     {
         $requirementsMet = $nonWhiteGloveProductVariantsInCart
-            ->map(fn (CartItem $item) => $item->getProduct()?->id ?? null)
-            ->values()
+            ->map(fn ($item) => $item->getProduct()?->id)
             ->intersect($set_of_required_shopify_product_ids);
 
         foreach ($requirementsMet as $id) {
+            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
 
-            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->reject(function (CartItem $item) use ($id) {
-                return $item->getProduct()?->id != $id;
-            });
+            if($cartItem->quantity > $retrievedCartItem->quantity) {
+                $errorMessage = ' The number of '. $cartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $cartItem?->getVariant()?->title . ' services matches the number of eligible products.';
 
-            if($cartItem->quantity > $retrievedCartItem->first()->quantity) {
-                $this->getStatusAndErrorMessage($cartItem, $retrievedCartItem->first(), false);
-
-                return $this->getStatusAndErrorMessage($cartItem, $retrievedCartItem->first(), false);
+                return [false, $errorMessage];
             }
         }
 
-        return null;
-    }
-
-    public function getStatusAndErrorMessage($whiteGloveCartItem, $requiredProductCartItem, bool $status): array
-    {
-        $message = ' The number of '. $whiteGloveCartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $whiteGloveCartItem?->getVariant()?->title . ' services matches the number of eligible products.';
-
-        return [$status, $message];
+        return [true, null];
     }
 
     public function errorMessage(): string
