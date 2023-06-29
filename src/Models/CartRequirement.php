@@ -105,7 +105,6 @@ class CartRequirement extends Model
      */
     public function quantityIsEligible(CartItem $cartItem): array
     {
-
         if (empty($this->first_set_of_required_shopify_product_ids)) {
             return [true, null];
         }
