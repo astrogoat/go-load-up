@@ -96,6 +96,21 @@ class GoLoadUp
                 IneligibleWhiteGloveItemsFoundInCart::class,
                 $requirement?->errorMessage()
             );
+
+            $this->validateCartRequirementQuantity($requirement, $cartItem);
         };
+    }
+
+    /**
+     * @throws IneligibleWhiteGloveItemsFoundInCart
+     * @throws Throwable
+     */
+    public function validateCartRequirementQuantity(CartRequirement $requirement, CartItem $cartItem): void
+    {
+        [$status, $message] = $requirement?->quantityIsEligible($cartItem) ?? [true, null];
+
+        if (! $status) {
+            throw new IneligibleWhiteGloveItemsFoundInCart($message);
+        }
     }
 }

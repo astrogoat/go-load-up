@@ -95,6 +95,57 @@ class CartRequirement extends Model
         return $firstRequirementsMet && $secondRequirementsMet;
     }
 
+    /**
+     * Quantity of White Glove service product
+     * should not be greater than the quantity
+     * of the required product.
+     *
+     * @param CartItem $cartItem
+     * @return array
+     */
+    public function quantityIsEligible(CartItem $cartItem): array
+    {
+        if (empty($this->first_set_of_required_shopify_product_ids)) {
+            return [true, null];
+        }
+
+        $nonWhiteGloveProductVariantsInCart = resolve(GoLoadUp::class)->getNonWhiteGloveProductVariantsInCart();
+
+        $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids, );
+
+        if (! is_null($firstRequirementsQuantityError)) {
+            return $firstRequirementsQuantityError;
+        }
+
+        $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids, );
+
+        if (! is_null($secondRequirementsQuantityError)) {
+            return $secondRequirementsQuantityError;
+        }
+
+        return [true, null];
+    }
+
+    public function catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array|null
+    {
+        $requirementsMet = $nonWhiteGloveProductVariantsInCart
+            ->map(fn ($item) => $item->getProduct()?->id)
+            ->values()
+            ->intersect($set_of_required_shopify_product_ids);
+
+        foreach ($requirementsMet as $id) {
+            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
+
+            if($cartItem->quantity > $retrievedCartItem->quantity) {
+                $errorMessage = 'The number of '. $cartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $cartItem?->getVariant()?->title . ' services matches the number of eligible products.';
+
+                return [false, $errorMessage];
+            }
+        }
+
+        return [true, null];
+    }
+
     public function errorMessage(): string
     {
         return $this->error_message;
