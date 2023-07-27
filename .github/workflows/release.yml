@@ -22,7 +22,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          token: ${{ secrets.MILES_BOT_TOKEN }}
 
       # In order to make a commit, we need to initialize a user.
       # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
@@ -35,10 +35,8 @@ jobs:
         id: bump-version
         run: echo "version=$(npm version ${{ inputs.level }} --tag-version-prefix=)" >> $GITHUB_OUTPUT
 
-      # For this step to run successfully a one-time actions is required:
-      # Add the following public key as a deploy key in GitHub under: Your repo -> Settings -> Security -> Deploy keys
-      #    Title: Astrogoat Deploy Key
-      #    Public key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDOdO26AbFY8OkFvdpe0RnIM+/16dsZM0Nru7GwoEEJb
+      # Make sure that the Miles Bot user is included in the list of users who can bypass required pull request requirement
+      # Your repo -> Settings -> Branches -> Main (edit) -> "Allow specified actors to bypass required pull requests"
       - name: Push changes
         run: git push origin main
 
