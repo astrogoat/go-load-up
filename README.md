@@ -37,6 +37,19 @@ echo $go-load-up->echoPhrase('Hello, Astrogoat!');
 composer test
 ```
 
+## Releasing a new version
+
+For this step to run successfully a one-time action is required:
+Add the following public key as a deploy key in GitHub under: Your repo -> Settings -> Security -> Deploy keys
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#    Title: "Astrogoat Deploy Key"                                                                     #
+#    Public key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDOdO26AbFY8OkFvdpe0RnIM+/16dsZM0Nru7GwoEEJb"    #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+Use the included GitHub action to create a new release.
+Go to https://github.com/astrogoat/skeleton/actions/workflows/release.yml click the "Run workflow" dropdown, select your version level bump, and click the "Run workflow" button.
+or run `gh workflow run release.yml` from your skeleton directory if you have the GitHub CLI installed locally. 
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
