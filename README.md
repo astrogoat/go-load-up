@@ -39,17 +39,13 @@ composer test
 
 ## Releasing a new version
 
----
-For this step to run successfully a one-time action is required:
-Add the following public key as a [deploy key](https://github.com/astrogoat/go-load-up/settings/keys) in GitHub under: Your repo -> Settings -> Security -> Deploy keys
-
-Title: `Astrogoat Deploy Key`  
-Public key: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDOdO26AbFY8OkFvdpe0RnIM+/16dsZM0Nru7GwoEEJb`
----
-
 Use the included GitHub action to create a new release.
 Go to https://github.com/astrogoat/go-load-up/actions/workflows/release.yml click the "Run workflow" dropdown, select your version level bump, and click the "Run workflow" button.
-or run `gh workflow run release.yml` from your skeleton directory if you have the GitHub CLI installed locally. 
+or run `gh workflow run release.yml` from your skeleton directory if you have the GitHub CLI installed locally.
+
+**Important**: Make sure that the Miles Bot user is included in the list of users who can bypass required pull request requirement
+Your repo -> Settings -> Branches -> Main (edit) -> "Allow specified actors to bypass required pull requests"
+
 
 ## Changelog
 
