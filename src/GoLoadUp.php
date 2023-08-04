@@ -97,7 +97,9 @@ class GoLoadUp
                 $requirement?->errorMessage()
             );
 
-            if (! is_null($requirement)) $this->validateCartRequirementQuantity($requirement, $cartItem);
+            if (! is_null($requirement)) {
+                $this->validateCartRequirementQuantity($requirement, $cartItem);
+            }
         };
     }
 
