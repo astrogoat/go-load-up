@@ -7,10 +7,10 @@
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "release": "gh run list --workflow=release.yml",
-        "release:patch": "gh run list --workflow=release.yml --field level=patch",
-        "release:minor": "gh run list --workflow=release.yml --field level=minor",
-        "release:major": "gh run list --workflow=release.yml --field level=major"
+        "release": "gh workflow run release.yml",
+        "release:patch": "gh workflow run release.yml --field level=patch",
+        "release:minor": "gh workflow run release.yml --field level=minor",
+        "release:major": "gh workflow run release.yml --field level=major"
     },
     "repository": {
         "type": "git",
