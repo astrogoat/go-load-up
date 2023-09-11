@@ -42,7 +42,7 @@ class CartRequirement extends Model
     protected function title(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->serviceProductVariant?->title,
+            get: fn ($value) => $this->load('serviceProductVariant')->serviceProductVariant?->title,
         );
     }
 
