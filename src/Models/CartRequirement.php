@@ -113,13 +113,13 @@ class CartRequirement extends Model
 
         $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids, );
 
-        if (! is_null($firstRequirementsQuantityError)) {
+        if (! reset($firstRequirementsQuantityError)) {
             return $firstRequirementsQuantityError;
         }
 
         $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids, );
 
-        if (! is_null($secondRequirementsQuantityError)) {
+        if (! reset($secondRequirementsQuantityError)) {
             return $secondRequirementsQuantityError;
         }
 
@@ -135,7 +135,6 @@ class CartRequirement extends Model
 
         foreach ($requirementsMet as $id) {
             $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
-
             if($cartItem->quantity > $retrievedCartItem->quantity) {
                 $errorMessage = 'The number of '. $cartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $cartItem?->getVariant()?->title . ' services matches the number of eligible products.';
 
