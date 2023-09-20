@@ -111,22 +111,22 @@ class CartRequirement extends Model
 
         $nonWhiteGloveProductVariantsInCart = resolve(GoLoadUp::class)->getNonWhiteGloveProductVariantsInCart();
 
-        $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids, );
+        $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids);
 
-        if (! reset($firstRequirementsQuantityError)) {
+        if (!$firstRequirementsQuantityError[0]) {
             return $firstRequirementsQuantityError;
         }
 
-        $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids, );
+        $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids);
 
-        if (! reset($secondRequirementsQuantityError)) {
+        if (!$secondRequirementsQuantityError[0]) {
             return $secondRequirementsQuantityError;
         }
 
         return [true, null];
     }
 
-    public function catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array|null
+    public function catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
     {
         $requirementsMet = $nonWhiteGloveProductVariantsInCart
             ->map(fn ($item) => $item->getProduct()?->id)
