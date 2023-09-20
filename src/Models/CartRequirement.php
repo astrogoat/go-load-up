@@ -113,13 +113,13 @@ class CartRequirement extends Model
 
         $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids);
 
-        if (!$firstRequirementsQuantityError[0]) {
+        if (! $firstRequirementsQuantityError[0]) {
             return $firstRequirementsQuantityError;
         }
 
         $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids);
 
-        if (!$secondRequirementsQuantityError[0]) {
+        if (! $secondRequirementsQuantityError[0]) {
             return $secondRequirementsQuantityError;
         }
 
