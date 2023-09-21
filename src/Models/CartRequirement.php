@@ -126,8 +126,11 @@ class CartRequirement extends Model
         return [true, null];
     }
 
-    public function catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
+    public function catchQuantityMismatch($wgCartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
     {
+        $totalRequirementsMetQuantity = 0;
+        $hasMisMatch = false;
+
         $requirementsMet = $nonWhiteGloveProductVariantsInCart
             ->map(fn ($item) => $item->getProduct()?->id)
             ->values()
@@ -135,11 +138,21 @@ class CartRequirement extends Model
 
         foreach ($requirementsMet as $id) {
             $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
-            if($cartItem->quantity > $retrievedCartItem->quantity) {
-                $errorMessage = 'The number of '. $cartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $cartItem?->getVariant()?->title . ' services matches the number of eligible products.';
+            $totalRequirementsMetQuantity += $retrievedCartItem->quantity;
 
-                return [false, $errorMessage];
+            if($wgCartItem->quantity > $retrievedCartItem->quantity) {
+                $hasMisMatch = true;
             }
+        }
+
+        if($totalRequirementsMetQuantity >= $wgCartItem->quantity) {
+            return [true, null];
+        }
+
+        if($hasMisMatch) {
+            $errorMessage = 'The number of '. $wgCartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $wgCartItem?->getVariant()?->title . ' services matches the number of eligible products.';
+
+            return [false, $errorMessage];
         }
 
         return [true, null];
