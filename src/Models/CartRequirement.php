@@ -111,23 +111,26 @@ class CartRequirement extends Model
 
         $nonWhiteGloveProductVariantsInCart = resolve(GoLoadUp::class)->getNonWhiteGloveProductVariantsInCart();
 
-        $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids, );
+        $firstRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->first_set_of_required_shopify_product_ids);
 
-        if (! is_null($firstRequirementsQuantityError)) {
+        if (! $firstRequirementsQuantityError[0]) {
             return $firstRequirementsQuantityError;
         }
 
-        $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids, );
+        $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids);
 
-        if (! is_null($secondRequirementsQuantityError)) {
+        if (! $secondRequirementsQuantityError[0]) {
             return $secondRequirementsQuantityError;
         }
 
         return [true, null];
     }
 
-    public function catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array|null
+    public function catchQuantityMismatch($wgCartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
     {
+        $totalRequirementsMetQuantity = 0;
+        $hasMisMatch = false;
+
         $requirementsMet = $nonWhiteGloveProductVariantsInCart
             ->map(fn ($item) => $item->getProduct()?->id)
             ->values()
@@ -135,12 +138,21 @@ class CartRequirement extends Model
 
         foreach ($requirementsMet as $id) {
             $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
+            $totalRequirementsMetQuantity += $retrievedCartItem->quantity;
 
-            if($cartItem->quantity > $retrievedCartItem->quantity) {
-                $errorMessage = 'The number of '. $cartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $cartItem?->getVariant()?->title . ' services matches the number of eligible products.';
-
-                return [false, $errorMessage];
+            if($wgCartItem->quantity > $retrievedCartItem->quantity) {
+                $hasMisMatch = true;
             }
+        }
+
+        if($totalRequirementsMetQuantity >= $wgCartItem->quantity) {
+            return [true, null];
+        }
+
+        if($hasMisMatch) {
+            $errorMessage = 'The number of '. $wgCartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $wgCartItem?->getVariant()?->title . ' services matches the number of eligible products.';
+
+            return [false, $errorMessage];
         }
 
         return [true, null];
