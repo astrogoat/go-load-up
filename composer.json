@@ -22,12 +22,13 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
+        "astrogoat/cart": "^3.0",
+        "astrogoat/shopify": "^2.0",
         "astrogoat/strata": "^0.7.0",
-        "illuminate/contracts": "^8.37 || ^9.9 || ^10",
+        "illuminate/contracts": "^10",
         "spatie/laravel-package-tools": "^1.4.3",
-        "spatie/simple-excel": "^3.2.0",
-        "astrogoat/shopify": "^1.39"
+        "spatie/simple-excel": "^3.2.0"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.3",
