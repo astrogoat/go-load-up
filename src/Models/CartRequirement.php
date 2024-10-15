@@ -126,7 +126,7 @@ class CartRequirement extends Model
         return [true, null];
     }
 
-    public function catchQuantityMismatch($wgCartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
+    public function catchQuantityMismatch(CartItem $wgCartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
     {
         $totalRequirementsMetQuantity = 0;
         $hasMisMatch = false;
@@ -137,15 +137,16 @@ class CartRequirement extends Model
             ->intersect($set_of_required_shopify_product_ids);
 
         foreach ($requirementsMet as $id) {
+            /** @var CartItem $retrievedCartItem */
             $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
-            $totalRequirementsMetQuantity += $retrievedCartItem->quantity;
+            $totalRequirementsMetQuantity += $retrievedCartItem->getQuantity();
 
-            if($wgCartItem->quantity > $retrievedCartItem->quantity) {
+            if($wgCartItem->getQuantity() > $retrievedCartItem->getQuantity()) {
                 $hasMisMatch = true;
             }
         }
 
-        if($totalRequirementsMetQuantity >= $wgCartItem->quantity) {
+        if($totalRequirementsMetQuantity >= $wgCartItem->getQuantity()) {
             return [true, null];
         }
 
