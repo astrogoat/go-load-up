@@ -161,16 +161,16 @@ class CartRequirement extends Model
             $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
             $totalRequirementsMetQuantity += $retrievedCartItem->getQuantity();
 
-            if($wgCartItem->getQuantity() > $retrievedCartItem->getQuantity()) {
+            if ($wgCartItem->getQuantity() > $retrievedCartItem->getQuantity()) {
                 $hasMisMatch = true;
             }
         }
 
-        if($totalRequirementsMetQuantity >= $wgCartItem->getQuantity()) {
+        if ($totalRequirementsMetQuantity >= $wgCartItem->getQuantity()) {
             return [true, null];
         }
 
-        if($hasMisMatch) {
+        if ($hasMisMatch) {
             $errorMessage = 'The number of '. $wgCartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $wgCartItem?->getVariant()?->title . ' services matches the number of eligible products.';
 
             return [false, $errorMessage];
