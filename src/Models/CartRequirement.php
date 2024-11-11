@@ -82,6 +82,11 @@ class CartRequirement extends Model
             ->intersect($this->first_set_of_required_shopify_product_ids)
             ->isNotEmpty();
 
+
+        if (! $firstRequirementsMet) {
+            $firstRequirementsMet = $this->existsInBundleLineItems($this->first_set_of_required_shopify_product_ids);
+        }
+
         if (empty($this->second_set_of_required_shopify_product_ids)) {
             return $firstRequirementsMet;
         }
@@ -92,7 +97,22 @@ class CartRequirement extends Model
             ->intersect($this->second_set_of_required_shopify_product_ids)
             ->isNotEmpty();
 
+        if (! $secondRequirementsMet) {
+            $secondRequirementsMet = $this->existsInBundleLineItems($this->second_set_of_required_shopify_product_ids);
+        }
+
         return $firstRequirementsMet && $secondRequirementsMet;
+    }
+
+    public function existsInBundleLineItems(array $requirementIds): bool
+    {
+        $bundleLineItemsProductVariantIdsInCart = resolve(GoLoadUp::class)->getProductVariantIdsOfBundleLineItemsInCart();
+
+        $requirementsMet = $bundleLineItemsProductVariantIdsInCart
+            ->intersect($requirementIds)
+            ->isNotEmpty();
+
+        return $requirementsMet;
     }
 
     /**
