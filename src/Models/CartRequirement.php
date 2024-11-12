@@ -108,11 +108,9 @@ class CartRequirement extends Model
     {
         $bundleLineItemsProductVariantIdsInCart = resolve(GoLoadUp::class)->getProductVariantIdsOfBundleLineItemsInCart();
 
-        $requirementsMet = $bundleLineItemsProductVariantIdsInCart
+        return $bundleLineItemsProductVariantIdsInCart
             ->intersect($requirementIds)
             ->isNotEmpty();
-
-        return $requirementsMet;
     }
 
     /**
