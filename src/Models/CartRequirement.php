@@ -83,7 +83,7 @@ class CartRequirement extends Model
             ->isNotEmpty();
 
 
-        if (! $firstRequirementsMet) { // check if any exists in bundle line items
+        if (! $firstRequirementsMet) { // check if any exists in nested bundle line items
             $firstRequirementsMet = $this->existsInBundleLineItems($this->first_set_of_required_shopify_product_ids);
         }
 
@@ -97,7 +97,7 @@ class CartRequirement extends Model
             ->intersect($this->second_set_of_required_shopify_product_ids)
             ->isNotEmpty();
 
-        if (! $secondRequirementsMet) { // check if any exists in bundle line items
+        if (! $secondRequirementsMet) { // check if any exists in nested bundle line items
             $secondRequirementsMet = $this->existsInBundleLineItems($this->second_set_of_required_shopify_product_ids);
         }
 
