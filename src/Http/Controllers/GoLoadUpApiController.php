@@ -16,7 +16,7 @@ class GoLoadUpApiController
 
         $validZipCode = resolve(GoLoadUp::class)->getZipCodeModel($zipCode);
 
-        if(is_null($validZipCode)) {
+        if (is_null($validZipCode)) {
             return response()->json([
                     'status' => 404,
                     'error_message' => "Not in service area.",
@@ -29,7 +29,7 @@ class GoLoadUpApiController
             $shopifyId = $this->getRemovalOnlyMattress(true)?->shopify_id;
         }
 
-        if(in_array($shopifyId, $wgLineItems)) {
+        if (in_array($shopifyId, $wgLineItems)) {
             return response()->json([
                 'status' => 406,
                 'wg_line_item' => $shopifyId,
