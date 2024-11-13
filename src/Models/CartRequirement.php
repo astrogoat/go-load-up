@@ -82,6 +82,11 @@ class CartRequirement extends Model
             ->intersect($this->first_set_of_required_shopify_product_ids)
             ->isNotEmpty();
 
+
+        if (! $firstRequirementsMet) { // check if any exists in nested bundle line items
+            $firstRequirementsMet = $this->existsInBundleLineItems($this->first_set_of_required_shopify_product_ids);
+        }
+
         if (empty($this->second_set_of_required_shopify_product_ids)) {
             return $firstRequirementsMet;
         }
@@ -92,7 +97,20 @@ class CartRequirement extends Model
             ->intersect($this->second_set_of_required_shopify_product_ids)
             ->isNotEmpty();
 
+        if (! $secondRequirementsMet) { // check if any exists in nested bundle line items
+            $secondRequirementsMet = $this->existsInBundleLineItems($this->second_set_of_required_shopify_product_ids);
+        }
+
         return $firstRequirementsMet && $secondRequirementsMet;
+    }
+
+    public function existsInBundleLineItems(array $requirementIds): bool
+    {
+        $bundleLineItemsProductVariantIdsInCart = resolve(GoLoadUp::class)->getProductVariantIdsOfBundleLineItemsInCart();
+
+        return $bundleLineItemsProductVariantIdsInCart
+            ->intersect($requirementIds)
+            ->isNotEmpty();
     }
 
     /**
@@ -141,16 +159,16 @@ class CartRequirement extends Model
             $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
             $totalRequirementsMetQuantity += $retrievedCartItem->getQuantity();
 
-            if($wgCartItem->getQuantity() > $retrievedCartItem->getQuantity()) {
+            if ($wgCartItem->getQuantity() > $retrievedCartItem->getQuantity()) {
                 $hasMisMatch = true;
             }
         }
 
-        if($totalRequirementsMetQuantity >= $wgCartItem->getQuantity()) {
+        if ($totalRequirementsMetQuantity >= $wgCartItem->getQuantity()) {
             return [true, null];
         }
 
-        if($hasMisMatch) {
+        if ($hasMisMatch) {
             $errorMessage = 'The number of '. $wgCartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $wgCartItem?->getVariant()?->title . ' services matches the number of eligible products.';
 
             return [false, $errorMessage];

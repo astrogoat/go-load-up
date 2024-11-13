@@ -75,6 +75,22 @@ class GoLoadUp
         });
     }
 
+    public function getBundleLineItemsInCart(): Collection
+    {
+        return cart()->getItems()->filter(function (CartItem $cartItem) {
+            return $cartItem->hasComponents();
+        });
+    }
+
+    public function getProductVariantIdsOfBundleLineItemsInCart(): Collection
+    {
+        return $this->getBundleLineItemsInCart()->map(function (CartItem $cartItem) {
+            return collect($cartItem->getComponents())->map(function (\Astrogoat\Shopify\Providers\ShopifyCartItemComponent $component) {
+                return $component->findModel()?->product_id;
+            });
+        })->flatten();
+    }
+
     /**
      * @throws IneligibleWhiteGloveItemsFoundInCart
      * @throws Throwable
