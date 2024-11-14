@@ -24,7 +24,7 @@ class Index extends BaseIndex
 
     public function mainSearchColumn(): string|false
     {
-        return 'zip';
+        return 'name';
     }
 
     public function render()
