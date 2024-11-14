@@ -5,7 +5,8 @@ namespace Astrogoat\GoLoadUp;
 use Astrogoat\Cart\Events\CheckingOut;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\CartRequirements;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\Services;
-use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodeForm;
+use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodes\Form;
+use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodes\Index;
 use Astrogoat\GoLoadUp\Http\Livewire\Upload\CsvUploadForm;
 use Astrogoat\GoLoadUp\Models\ZipCode;
 use Astrogoat\GoLoadUp\Settings\GoLoadUpSettings;
@@ -79,7 +80,8 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
             }
         });
 
-        Livewire::component('astrogoat.go-load-up.zip-codes.form', ZipCodeForm::class);
+        Livewire::component('astrogoat.go-load-up.http.livewire.models.zip-codes.form', Form::class);
+        Livewire::component('astrogoat.go-load-up.http.livewire.models.zip-codes.form', Index::class);
         Livewire::component('astrogoat.go-load-up.http.livewire.models.services.index', Services\Index::class);
         Livewire::component('astrogoat.go-load-up.http.livewire.models.cart-requirements.index', CartRequirements\Index::class);
         Livewire::component('astrogoat.go-load-up.http.livewire.models.cart-requirements.form', CartRequirements\Form::class);

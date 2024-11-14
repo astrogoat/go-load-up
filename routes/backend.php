@@ -1,6 +1,6 @@
 <?php
-use Astrogoat\GoLoadUp\Http\Controllers\GoLoadUpController;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\CartRequirements;
+use Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodes;
 use Astrogoat\GoLoadUp\Http\Livewire\Models\Services;
 use Illuminate\Support\Facades\Route;
 
@@ -12,8 +12,8 @@ Route::group([
         'as' => 'zip-codes.',
         'prefix' => 'zip-codes'
     ], function () {
-        Route::get('/', [GoLoadUpController::class, 'index'])->name('index');
-        Route::get('/{zipCode}/edit', [GoLoadUpController::class, 'edit'])->name('edit');
+        Route::get('/', ZipCodes\Index::class)->name('index');
+        Route::get('/{zipCode}/edit', ZipCodes\Form::class)->name('edit');
         Route::get('/upload', \Astrogoat\GoLoadUp\Http\Livewire\Upload\CsvUploadForm::class)->name('upload');
     });
 

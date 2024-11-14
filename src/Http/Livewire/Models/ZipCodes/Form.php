@@ -1,12 +1,17 @@
 <?php
+namespace Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodes;
 
-namespace Astrogoat\GoLoadUp\Http\Livewire\Models;
+use Astrogoat\GoLoadUp\Models\ZipCode;
+use Helix\Lego\Http\Livewire\Models\Form as BaseForm;
 
-use Helix\Lego\Http\Livewire\Models\Form;
-
-class ZipCodeForm extends Form
+class Form extends BaseForm
 {
     protected bool $canBeViewed = false;
+
+    public function mount($zipCode)
+    {
+        $this->setModel($zipCode);
+    }
 
     public function rules()
     {
@@ -19,15 +24,15 @@ class ZipCodeForm extends Form
         ];
     }
 
-    public function mount($zipCode)
+    public function model(): string
     {
-        $this->setModel($zipCode);
+        return ZipCode::class;
     }
 
     public function saved()
     {
         if ($this->model->wasRecentlyCreated) {
-            return redirect()->to(route('lego.go-load-up.zipcodes.edit', $this->model));
+            return redirect()->to(route('lego.go-load-up.zip-codes.edit', $this->model));
         }
     }
 
