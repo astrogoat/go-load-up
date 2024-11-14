@@ -3,7 +3,6 @@
 namespace Astrogoat\GoLoadUp\Http\Controllers;
 
 use Astrogoat\GoLoadUp\Models\GoLoadUpProduct;
-use Astrogoat\GoLoadUp\Models\ZipCode;
 
 class GoLoadUpController
 {
