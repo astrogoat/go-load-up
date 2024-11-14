@@ -1,4 +1,5 @@
 <?php
+
 namespace Astrogoat\GoLoadUp\Http\Livewire\Models\ZipCodes;
 
 use Astrogoat\GoLoadUp\Models\ZipCode;
