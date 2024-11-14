@@ -81,7 +81,7 @@ class GoLoadUpServiceProvider extends PackageServiceProvider
         });
 
         Livewire::component('astrogoat.go-load-up.http.livewire.models.zip-codes.form', Form::class);
-        Livewire::component('astrogoat.go-load-up.http.livewire.models.zip-codes.form', Index::class);
+        Livewire::component('astrogoat.go-load-up.http.livewire.models.zip-codes.index', Index::class);
         Livewire::component('astrogoat.go-load-up.http.livewire.models.services.index', Services\Index::class);
         Livewire::component('astrogoat.go-load-up.http.livewire.models.cart-requirements.index', CartRequirements\Index::class);
         Livewire::component('astrogoat.go-load-up.http.livewire.models.cart-requirements.form', CartRequirements\Form::class);

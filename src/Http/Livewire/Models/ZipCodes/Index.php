@@ -15,7 +15,7 @@ class Index extends BaseIndex
     public function columns(): array
     {
         return [
-            'zip' => 'ZIP',
+            'zip' => 'Zip',
             'name' => 'Name',
             'is_eligible' => 'Eligibility',
             'updated_at' => 'Last updated',
