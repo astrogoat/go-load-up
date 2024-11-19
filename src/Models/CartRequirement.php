@@ -169,7 +169,6 @@ class CartRequirement extends Model
         // get total quantity of required products that appear in bundles
         foreach ($bundleRequirementsMet as $productId) {
             $occurrenceCount = $this->getRequiredProductOccurrenceCountInBundles($productId);
-
             $totalRequirementsMetQuantity += $occurrenceCount;
         }
 
