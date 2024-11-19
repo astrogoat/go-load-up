@@ -146,35 +146,76 @@ class CartRequirement extends Model
 
     public function catchQuantityMismatch(CartItem $wgCartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
     {
-        $totalRequirementsMetQuantity = 0;
-        $hasMisMatch = false;
-
-        $requirementsMet = $nonWhiteGloveProductVariantsInCart
-            ->map(fn ($item) => $item->getProduct()?->id)
+        // Find required products at the top level
+        $topLevelProductIds = $nonWhiteGloveProductVariantsInCart
+            ->map(fn($item) => $item->getProduct()?->id)
             ->values()
             ->intersect($set_of_required_shopify_product_ids);
 
-        foreach ($requirementsMet as $id) {
-            /** @var CartItem $retrievedCartItem */
-            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
-            $totalRequirementsMetQuantity += $retrievedCartItem->getQuantity();
+        // Check bundles if no required products are found at the top level
+        if ($topLevelProductIds->isEmpty()) {
+            $bundleProductVariantIds = resolve(GoLoadUp::class)->getProductVariantIdsOfBundleLineItemsInCart();
+            $bundleRequirementsMet = $bundleProductVariantIds->intersect($set_of_required_shopify_product_ids);
 
-            if ($wgCartItem->getQuantity() > $retrievedCartItem->getQuantity()) {
-                $hasMisMatch = true;
+            foreach ($bundleRequirementsMet as $productId) {
+                $occurrenceCount = $this->getRequiredProductOccurrenceCountInBundles($productId);
+
+                if ($this->isQuantityMismatch($wgCartItem->getQuantity(), $occurrenceCount, $wgCartItem)) {
+                    return $this->generateErrorResponse($wgCartItem);
+                }
             }
-        }
 
-        if ($totalRequirementsMetQuantity >= $wgCartItem->getQuantity()) {
             return [true, null];
         }
 
-        if ($hasMisMatch) {
-            $errorMessage = 'The number of '. $wgCartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $wgCartItem?->getVariant()?->title . ' services matches the number of eligible products.';
 
-            return [false, $errorMessage];
+        // Validate quantities for top-level products
+        foreach ($topLevelProductIds as $productId) {
+            $cartItem = $nonWhiteGloveProductVariantsInCart->first(fn($item) => $item->getProduct()?->id === $productId);
+            $occurrenceCount = $this->getRequiredProductOccurrenceCountInBundles($productId);
+
+            $totalEligibleQuantity = ($cartItem->getQuantity() ?? 0) + $occurrenceCount;
+
+            if ($this->isQuantityMismatch($wgCartItem->getQuantity(), $totalEligibleQuantity, $wgCartItem)) {
+                return $this->generateErrorResponse($wgCartItem);
+            }
         }
 
         return [true, null];
+    }
+
+    private function isQuantityMismatch(int $selectedQuantity, int $availableQuantity, CartItem $wgCartItem): bool
+    {
+        return $selectedQuantity > $availableQuantity;
+    }
+
+    private function generateErrorResponse(CartItem $wgCartItem): array
+    {
+        $serviceTitle = $wgCartItem?->getVariant()?->title ?? 'service';
+        $errorMessage = sprintf(
+            'The number of %s services you selected does not match the number of eligible products in your cart. ' .
+            'Please double-check the items in your cart to ensure the quantity of %s services matches the number of eligible products.',
+            $serviceTitle,
+            $serviceTitle
+        );
+
+        return [false, $errorMessage];
+    }
+
+    public function getRequiredProductOccurrenceCountInBundles($productId): int
+    {
+        $bundleLineItems = resolve(GoLoadUp::class)->getBundleLineItemsInCart();
+        $count = 0;
+
+        foreach ($bundleLineItems as $bundleItem) {
+            foreach ($bundleItem->getComponents() as $component) {
+                if ($component->findModel()?->product_id === $productId) {
+                    $count += $component->getQuantity();
+                }
+            }
+        }
+
+        return $count;
     }
 
     public function errorMessage(): string
