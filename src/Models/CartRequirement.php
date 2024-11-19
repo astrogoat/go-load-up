@@ -148,7 +148,7 @@ class CartRequirement extends Model
     {
         // Find required products at the top level
         $topLevelProductIds = $nonWhiteGloveProductVariantsInCart
-            ->map(fn($item) => $item->getProduct()?->id)
+            ->map(fn ($item) => $item->getProduct()?->id)
             ->values()
             ->intersect($set_of_required_shopify_product_ids);
 
@@ -171,7 +171,7 @@ class CartRequirement extends Model
 
         // Validate quantities for top-level products
         foreach ($topLevelProductIds as $productId) {
-            $cartItem = $nonWhiteGloveProductVariantsInCart->first(fn($item) => $item->getProduct()?->id === $productId);
+            $cartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $productId);
             $occurrenceCount = $this->getRequiredProductOccurrenceCountInBundles($productId);
 
             $totalEligibleQuantity = ($cartItem->getQuantity() ?? 0) + $occurrenceCount;
