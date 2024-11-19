@@ -135,6 +135,8 @@ class CartRequirement extends Model
             return $firstRequirementsQuantityError;
         }
 
+        if (empty($this->second_set_of_required_shopify_product_ids)) return [true, null];
+
         $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids);
 
         if (! $secondRequirementsQuantityError[0]) {
@@ -146,47 +148,36 @@ class CartRequirement extends Model
 
     public function catchQuantityMismatch(CartItem $wgCartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
     {
-        // Find required products at the top level
+        // Find required products that appear at the top level
         $topLevelProductIds = $nonWhiteGloveProductVariantsInCart
             ->map(fn($item) => $item->getProduct()?->id)
             ->values()
             ->intersect($set_of_required_shopify_product_ids);
 
-        // Check bundles if no required products are found at the top level
-        if ($topLevelProductIds->isEmpty()) {
-            $bundleProductVariantIds = resolve(GoLoadUp::class)->getProductVariantIdsOfBundleLineItemsInCart();
-            $bundleRequirementsMet = $bundleProductVariantIds->intersect($set_of_required_shopify_product_ids);
+        $totalRequirementsMetQuantity = 0;
 
-            foreach ($bundleRequirementsMet as $productId) {
-                $occurrenceCount = $this->getRequiredProductOccurrenceCountInBundles($productId);
-
-                if ($this->isQuantityMismatch($wgCartItem->getQuantity(), $occurrenceCount, $wgCartItem)) {
-                    return $this->generateErrorResponse($wgCartItem);
-                }
-            }
-
-            return [true, null];
-        }
-
-
-        // Validate quantities for top-level products
+        // get total quantity of required products that appear at the top level
         foreach ($topLevelProductIds as $productId) {
             $cartItem = $nonWhiteGloveProductVariantsInCart->first(fn($item) => $item->getProduct()?->id === $productId);
+            $totalRequirementsMetQuantity += ($cartItem->getQuantity() ?? 0);
+        }
+
+        // Find required products that appear in bundles
+        $bundleProductVariantIds = resolve(GoLoadUp::class)->getProductVariantIdsOfBundleLineItemsInCart();
+        $bundleRequirementsMet = $bundleProductVariantIds->intersect($set_of_required_shopify_product_ids);
+
+        // get total quantity of required products that appear in bundles
+        foreach ($bundleRequirementsMet as $productId) {
             $occurrenceCount = $this->getRequiredProductOccurrenceCountInBundles($productId);
 
-            $totalEligibleQuantity = ($cartItem->getQuantity() ?? 0) + $occurrenceCount;
+            $totalRequirementsMetQuantity += $occurrenceCount;
+        }
 
-            if ($this->isQuantityMismatch($wgCartItem->getQuantity(), $totalEligibleQuantity, $wgCartItem)) {
-                return $this->generateErrorResponse($wgCartItem);
-            }
+        if ($wgCartItem->getQuantity() > $totalRequirementsMetQuantity) {
+            return $this->generateErrorResponse($wgCartItem);
         }
 
         return [true, null];
-    }
-
-    private function isQuantityMismatch(int $selectedQuantity, int $availableQuantity, CartItem $wgCartItem): bool
-    {
-        return $selectedQuantity > $availableQuantity;
     }
 
     private function generateErrorResponse(CartItem $wgCartItem): array
