@@ -135,7 +135,9 @@ class CartRequirement extends Model
             return $firstRequirementsQuantityError;
         }
 
-        if (empty($this->second_set_of_required_shopify_product_ids)) return [true, null];
+        if (empty($this->second_set_of_required_shopify_product_ids)) {
+            return [true, null];
+        }
 
         $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids);
 
@@ -150,7 +152,7 @@ class CartRequirement extends Model
     {
         // Find required products that appear at the top level
         $topLevelProductIds = $nonWhiteGloveProductVariantsInCart
-            ->map(fn($item) => $item->getProduct()?->id)
+            ->map(fn ($item) => $item->getProduct()?->id)
             ->values()
             ->intersect($set_of_required_shopify_product_ids);
 
@@ -158,7 +160,7 @@ class CartRequirement extends Model
 
         // get total quantity of required products that appear at the top level
         foreach ($topLevelProductIds as $productId) {
-            $cartItem = $nonWhiteGloveProductVariantsInCart->first(fn($item) => $item->getProduct()?->id === $productId);
+            $cartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $productId);
             $totalRequirementsMetQuantity += ($cartItem->getQuantity() ?? 0);
         }
 
