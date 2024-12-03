@@ -174,11 +174,25 @@ class CartRequirement extends Model
             $totalRequirementsMetQuantity += $occurrenceCount;
         }
 
-        if ($wgCartItem->getQuantity() > $totalRequirementsMetQuantity) {
+        if ($this->getTotalQuantityOfSpecifiedProductInCart($wgCartItem) > $totalRequirementsMetQuantity) {
             return $this->generateErrorResponse($wgCartItem);
         }
 
         return [true, null];
+    }
+
+    public function getTotalQuantityOfSpecifiedProductInCart(CartItem $wgCartItem)
+    {
+        // Admin can set line items to split to one quantity per line item in cart.
+        // This will require we make sure we have the accurate quantity of the go load up service we have in the cart.
+        if (settings(\Astrogoat\Shopify\Settings\ShopifySettings::class, 'split_line_items_to_one_quantity_per_line_item') === true) {
+
+            $allDuplicates = resolve(GoLoadUp::class)->getWhiteGloveProductVariantsInCart(); // get all duplicates of the service product in the cart
+
+            return $allDuplicates->count();
+        }
+
+        return $wgCartItem->getQuantity();
     }
 
     private function generateErrorResponse(CartItem $wgCartItem): array
