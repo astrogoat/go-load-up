@@ -135,6 +135,10 @@ class CartRequirement extends Model
             return $firstRequirementsQuantityError;
         }
 
+        if (empty($this->second_set_of_required_shopify_product_ids)) {
+            return [true, null];
+        }
+
         $secondRequirementsQuantityError = $this->catchQuantityMismatch($cartItem, $nonWhiteGloveProductVariantsInCart, $this->second_set_of_required_shopify_product_ids);
 
         if (! $secondRequirementsQuantityError[0]) {
@@ -146,35 +150,78 @@ class CartRequirement extends Model
 
     public function catchQuantityMismatch(CartItem $wgCartItem, $nonWhiteGloveProductVariantsInCart, $set_of_required_shopify_product_ids): array
     {
-        $totalRequirementsMetQuantity = 0;
-        $hasMisMatch = false;
-
-        $requirementsMet = $nonWhiteGloveProductVariantsInCart
+        // Find required products that appear at the top level
+        $topLevelProductIds = $nonWhiteGloveProductVariantsInCart
             ->map(fn ($item) => $item->getProduct()?->id)
             ->values()
             ->intersect($set_of_required_shopify_product_ids);
 
-        foreach ($requirementsMet as $id) {
-            /** @var CartItem $retrievedCartItem */
-            $retrievedCartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $id);
-            $totalRequirementsMetQuantity += $retrievedCartItem->getQuantity();
+        $totalRequirementsMetQuantity = 0;
 
-            if ($wgCartItem->getQuantity() > $retrievedCartItem->getQuantity()) {
-                $hasMisMatch = true;
-            }
+        // get total quantity of required products that appear at the top level
+        foreach ($topLevelProductIds as $productId) {
+            $cartItem = $nonWhiteGloveProductVariantsInCart->first(fn ($item) => $item->getProduct()?->id === $productId);
+            $totalRequirementsMetQuantity += ($cartItem->getQuantity() ?? 0);
         }
 
-        if ($totalRequirementsMetQuantity >= $wgCartItem->getQuantity()) {
-            return [true, null];
+        // Find required products that appear in bundles
+        $bundleProductVariantIds = resolve(GoLoadUp::class)->getProductVariantIdsOfBundleLineItemsInCart();
+        $bundleRequirementsMet = $bundleProductVariantIds->intersect($set_of_required_shopify_product_ids);
+
+        // get total quantity of required products that appear in bundles
+        foreach ($bundleRequirementsMet as $productId) {
+            $occurrenceCount = $this->getRequiredProductOccurrenceCountInBundles($productId);
+            $totalRequirementsMetQuantity += $occurrenceCount;
         }
 
-        if ($hasMisMatch) {
-            $errorMessage = 'The number of '. $wgCartItem?->getVariant()?->title . ' services you selected does not match the number of eligible products in your cart. Please double-check the items in your cart to ensure the quantity of ' . $wgCartItem?->getVariant()?->title . ' services matches the number of eligible products.';
-
-            return [false, $errorMessage];
+        if ($this->getTotalQuantityOfSpecifiedProductInCart($wgCartItem) > $totalRequirementsMetQuantity) {
+            return $this->generateErrorResponse($wgCartItem);
         }
 
         return [true, null];
+    }
+
+    public function getTotalQuantityOfSpecifiedProductInCart(CartItem $wgCartItem)
+    {
+        // Admin can set line items to split to one quantity per line item in cart.
+        // This will require we make sure we have the accurate quantity of the go load up service we have in the cart.
+        if (settings(\Astrogoat\Shopify\Settings\ShopifySettings::class, 'split_line_items_to_one_quantity_per_line_item') === true) {
+
+            $allDuplicates = resolve(GoLoadUp::class)->getWhiteGloveProductVariantsInCart(); // get all duplicates of the service product in the cart
+
+            return $allDuplicates->count();
+        }
+
+        return $wgCartItem->getQuantity();
+    }
+
+    private function generateErrorResponse(CartItem $wgCartItem): array
+    {
+        $serviceTitle = $wgCartItem?->getVariant()?->title ?? 'service';
+        $errorMessage = sprintf(
+            'The number of %s services you selected does not match the number of eligible products in your cart. ' .
+            'Please double-check the items in your cart to ensure the quantity of %s services matches the number of eligible products.',
+            $serviceTitle,
+            $serviceTitle
+        );
+
+        return [false, $errorMessage];
+    }
+
+    public function getRequiredProductOccurrenceCountInBundles($productId): int
+    {
+        $bundleLineItems = resolve(GoLoadUp::class)->getBundleLineItemsInCart();
+        $count = 0;
+
+        foreach ($bundleLineItems as $bundleItem) {
+            foreach ($bundleItem->getComponents() as $component) {
+                if ($component->findModel()?->product_id === $productId) {
+                    $count += $component->getQuantity();
+                }
+            }
+        }
+
+        return $count;
     }
 
     public function errorMessage(): string
