@@ -37,7 +37,7 @@
                     <x-fab::lists.table.column align="right">
                         {{ $requirement->updated_at->toFormattedDateString() }}
                     </x-fab::lists.table.column>
-                @endisset
+                @endif
 
                 <x-fab::lists.table.column align="right" slim>
                     <a href="{{ route('lego.go-load-up.cart-requirements.edit', $requirement) }}">Edit</a>
