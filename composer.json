@@ -13,6 +13,11 @@
             "name": "OniiCoder",
             "email": "oniicoder@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Laura Tonning",
+            "email": "github@tonning.dev",
+            "role": "Developer"
         }
     ],
     "repositories": [
@@ -26,16 +31,15 @@
         "astrogoat/cart": "^3.0",
         "astrogoat/shopify": "^2.0",
         "astrogoat/strata": "^0.7.0",
-        "illuminate/contracts": "^10",
+        "illuminate/contracts": "^10|^11.0",
         "spatie/laravel-package-tools": "^1.4.3",
         "spatie/simple-excel": "^3.2.0"
     },
     "require-dev": {
-        "nunomaduro/collision": "^5.3",
+        "nunomaduro/collision": "^5.3|^8.0",
         "orchestra/testbench": "^6.15",
-        "pestphp/pest": "^1.18",
-        "pestphp/pest-plugin-laravel": "^1.1",
-        "spatie/laravel-ray": "^1.23",
+        "pestphp/pest": "^1.18|^3.0",
+        "pestphp/pest-plugin-laravel": "^1.1|^3.0",
         "vimeo/psalm": "^4.8"
     },
     "autoload": {
