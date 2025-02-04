@@ -30,7 +30,7 @@
         "php": "^8.3",
         "astrogoat/cart": "^3.0",
         "astrogoat/shopify": "^2.0",
-        "astrogoat/strata": "^0.7.0",
+        "astrogoat/strata": "^0.7.0|^0.8.0",
         "illuminate/contracts": "^10|^11.0",
         "spatie/laravel-package-tools": "^1.4.3",
         "spatie/simple-excel": "^3.2.0"
